@@ -1,5 +1,5 @@
-# comp150-desktop-game
+## comp150-desktop-game
 
-## Sekai Saviour
+# Sekai Saviour
 
 A desktop game made collaboratively using Python and PyGame.
