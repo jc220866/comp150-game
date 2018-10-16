@@ -23,6 +23,12 @@ class Entity:
         # To do: define states, as to specify what images and animations to incorporate into lists
 
 
+class Player(Entity):
+
+    def __init__(self): # hi
+        Entity.__init__(self)
+
+
 class Enemy(Entity):
 
     def __init__(self):
