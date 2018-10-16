@@ -23,11 +23,19 @@ def main():
     screen.blit(background, (0, 0))
     pygame.display.flip()
 
+    # Toggle debug mode
+    debug = False
+
     # Event loop
     while 1:
+        if debug == True:
+            screen.blit('DEBUG MODE ON')
         for event in pygame.event.get():
             if event.type == QUIT:
                 return
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_a and event.key == pygame.K_b and event.key == pygame.K_SPACE:
+                    debug = True
 
         screen.blit(background, (0, 0))
         pygame.display.flip()
