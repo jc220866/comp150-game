@@ -29,11 +29,9 @@ while True:
         if event.type == QUIT or (event.type == KEYUP and event.key == K_ESCAPE):
             pygame.quit()
             sys.exit()
-        elif event.type == MOUSEMOTION and MOUSEBUTTONDOWN:  # start to read input
+        elif event.type == MOUSEBUTTONDOWN:  # start to read input
             mouseX, mouseY = event.pos
             Inputs.read_mouse_movements(mouseX, mouseY)
-
-    displaySurface.blit(Inputs.controlsSurface, (0, 1000))  # < Please somebody fix this
 
     # redraw display
     pygame.display.flip()
