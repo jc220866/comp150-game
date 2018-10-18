@@ -3,10 +3,12 @@
 Affinities = ('Chaos', 'Abyss', 'Void', 'Eldritch')
 Elements = ('Water', 'Air', 'Earth', 'Fire')
 Modifiers_Elemental_T1 = ('Dew', 'Whistles', 'Pebbles', 'Ashes')
-Modifiers_Elemental_T2 = ('Splashes', 'Breezes', 'Boulders', 'Smoulders')
-Modifiers_Elemental_T3 = ('', '', '', '')   # I ran out of ideas >.<
+Modifiers_Elemental_T2 = ('Splashes', 'Breezes', 'Rocks', 'Smoulders')
+Modifiers_Elemental_T3 = ('Waves', 'Typhoons', 'Boulders', 'Flames')
 Modifiers_Bonus = ('Cursed', 'Blessed')
 Quality = ('Broken', 'Chipped', 'Mundane', 'Tempered', 'Pristine')
+Weapons = ('Nodachi', 'Katana', 'Tekkan', 'Hachiwari')
+Upgrades = ('+0', '+1', '+2', '+3', '+4', '+5')
 
 # Defining colors for the 4 elements
 

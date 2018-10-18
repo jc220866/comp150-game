@@ -1,6 +1,7 @@
 # Classes used by Entity type Objects
 import Helper
 import random
+import time
 
 class Entity:
 
@@ -78,19 +79,90 @@ class Item:
 class Weapon(Item):
 
     def generate_modifiers(self):
-        # modifier array should contain: AFFINITY, ELEMENT, ELEMENT_TIER, BONUS MODIFIER, QUALITY
+        # modifier array should contain: AFFINITY, ELEMENT, ELEMENT_TIER, BONUS MODIFIER, QUALITY, UPGRADE
         # to indicate the lack of a modifier, -1 will be used
+        modifiers = [-1, -1, -1, -1, -1, -1]
 
-        for i in range(1, 5):
+        modifiers_size = [len(Helper.Affinities), len(Helper.Elements), 3, len(Helper.Modifiers_Bonus), len(Helper.Quality)]    # defines the number of possibilities for each modifier (-1 is added in the call)
+        modifiers_min = [-1, -1, 0, -1, 0, 0]   # Minimum values for modifiers: e.g. the QUALITY cannot be non-existent (-1)
 
-        return modifiers
+        for i in range(0, 4):   # We iterate through the first 4 modifiers
+            modifiers[i] = random.randint(modifiers_min[i], modifiers_size[i]-1)    # We assign a random value to each modifier, based on their minimum and maximum values
 
-    def generate_name(self, modifiers):
-        name = 'GenericItem' + str(Item.item_index)     # Placeholder
+        quality_roll = random.random()  # We select a random value between 0 and 1 for our quality
+        quality = 0     # Quality is initialised as 0
+
+        if quality_roll <= .10:     # For each percentage threshold we assign a possible outcome
+            quality = 0
+        elif quality_roll <= .25:
+            quality = 1
+        elif quality_roll <= .75:
+            quality = 2
+        elif quality_roll <= .90:
+            quality = 3
+        elif quality_roll <= 1:
+            quality = 4
+
+        modifiers[4] = quality  # We assign the quality value to the modifier array
+
+        upgrade_roll = random.random()  # Random value between 0 and 1 is selected
+        upgrade = 0     # Upgrade level is initialised as 0
+
+        if upgrade_roll <= .70:     # For each percentage threshold we assign a possible outcome
+            upgrade = 0
+        elif upgrade_roll <= .85:
+            upgrade = 1
+        elif upgrade_roll <= .93:
+            upgrade = 2
+        elif upgrade_roll <= .97:
+            upgrade = 3
+        elif upgrade_roll <= .99:
+            upgrade = 4
+        elif upgrade_roll <= 1:
+            upgrade = 5
+        modifiers[5] = upgrade  # We assign the upgrade level to the modifier array
+
+        return modifiers    # We return the modifier array
+
+    def generate_name(self, modifiers, weapon_type = random.randint(0, len(Helper.Weapons))):   # We import a modifier array and an OPTIONAL weapon type (if we want a custom item)
+
+        quality = Helper.Quality[modifiers[4]]  # We select the corresponding string from the Helper script
+
+        type = Helper.Weapons[weapon_type]  # Weapon type is assigned the corresponding string
+
+        if modifiers[1] >= 0:   # If the weapon has elemental attributes
+            element = ' of '
+            if modifiers[2] == 0:   # Based on the tier of the Elemental enchantment, we assign a corresponding string
+                element = element + Helper.Modifiers_Elemental_T1[modifiers[1]]
+            elif modifiers[2] == 1:
+                element = element + Helper.Modifiers_Elemental_T2[modifiers[1]]
+            elif modifiers[2] == 2:
+                element = element + Helper.Modifiers_Elemental_T3[modifiers[1]]
+        else:
+            element = ''    # If there is no elemental attribute, we assign an empty string
+
+        if modifiers[3] != -1:  # If the weapon has bonus attributes
+            bonus = ' (' + Helper.Modifiers_Bonus[modifiers[3]] + ')'
+        else:
+            bonus = ''
+
+        upgrade = ' ' + Helper.Upgrades[modifiers[5]]
+
+        name = quality + ' ' + type + element + upgrade
+
         return name
 
     def __init__(self, isCustom = False):   # If we want to create a custom item, all we have to do is set isCustom to True
         Item.__init__(self)
-        if not isCustom:
-            modifiers = Weapon.generate_modifiers(self)
-        Weapon.generate_name(self, modifiers)
+        #if not isCustom:
+        modifiers = Weapon.generate_modifiers(self)
+        weapon_type = random.randint(0, 3)
+        self.type = weapon_type
+        self.name = Weapon.generate_name(self, modifiers, weapon_type)
+
+
+def weapon_generator():     # Generates random weapons twice per second
+    while True:
+        weapon = Weapon()
+        print(weapon.name)
+        time.sleep(0.5)
