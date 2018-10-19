@@ -1,7 +1,16 @@
 # Classes used by Entity type Objects
 import Helper
 import random
-import time
+import pygame
+
+# screen = pygame.Surface((400, 400), pygame.SRCALPHA, 32)
+# pygame.draw.rect(screen, (0, 0, 0), (0, 0, 400, 400), 0)
+
+screen_width = int(750/3)
+screen_height = int(1334/3)
+
+screen = pygame.display.set_mode((screen_width, screen_height))
+
 
 class Entity:
 
@@ -48,7 +57,6 @@ class Room:
 
 
 class RoomEncounter(Room):
-
     def __init__(self):
         Room.__init__(self)
 
@@ -78,16 +86,34 @@ class Item:
 
 class Weapon(Item):
 
-    def generate_modifiers(self):
+    # static values for reference
+    weapon_width = 168
+    weapon_height = 24
+
+    @staticmethod
+    def generate_modifiers():
+
         # modifier array should contain: AFFINITY, ELEMENT, ELEMENT_TIER, BONUS MODIFIER, QUALITY, UPGRADE
         # to indicate the lack of a modifier, -1 will be used
+
         modifiers = [-1, -1, -1, -1, -1, -1]
 
         modifiers_size = [len(Helper.Affinities), len(Helper.Elements), 3, len(Helper.Modifiers_Bonus), len(Helper.Quality)]    # defines the number of possibilities for each modifier (-1 is added in the call)
         modifiers_min = [-1, -1, 0, -1, 0, 0]   # Minimum values for modifiers: e.g. the QUALITY cannot be non-existent (-1)
 
-        for i in range(0, 4):   # We iterate through the first 4 modifiers
+        for i in range(0, 3):   # We iterate through the first 4 modifiers
             modifiers[i] = random.randint(modifiers_min[i], modifiers_size[i]-1)    # We assign a random value to each modifier, based on their minimum and maximum values
+
+        bonus_roll = random.random()  # We select a random value between 0 and 1 for our bonus
+
+        if bonus_roll <= .85:     # For each percentage threshold we assign a possible outcome
+            bonus = -1
+        elif bonus_roll <= .95:
+            bonus = 0
+        else:
+            bonus = 1
+
+        modifiers[3] = bonus
 
         quality_roll = random.random()  # We select a random value between 0 and 1 for our quality
         quality = 0     # Quality is initialised as 0
@@ -124,7 +150,7 @@ class Weapon(Item):
 
         return modifiers    # We return the modifier array
 
-    def generate_name(self, modifiers, weapon_type = random.randint(0, len(Helper.Weapons))):   # We import a modifier array and an OPTIONAL weapon type (if we want a custom item)
+    def generate_name(self, modifiers, weapon_type=random.randint(0, len(Helper.Weapons))):   # We import a modifier array and an OPTIONAL weapon type (if we want a custom item)
 
         quality = Helper.Quality[modifiers[4]]  # We select the corresponding string from the Helper script
 
@@ -148,21 +174,79 @@ class Weapon(Item):
 
         upgrade = ' ' + Helper.Upgrades[modifiers[5]]
 
-        name = quality + ' ' + type + element + upgrade
+        name = quality + ' ' + type + element + upgrade + bonus
 
         return name
 
-    def __init__(self, isCustom = False):   # If we want to create a custom item, all we have to do is set isCustom to True
+    # thing about this function is, in order for it to work, a pygame.display must be set. However, how can we do that
+    # in a separate script?
+
+    @staticmethod
+    def generate_blade(blade, modifiers):
+        for x in range(0, blade.get_width()):
+            for y in range(0, blade.get_height()):
+                new_colour = blade.get_at((x, y))
+                if new_colour.a > 0:
+                    new_colour.r = max(min((new_colour.r + (modifiers[4] - 2) * 10), 255), 0)
+                    new_colour.g = max(min((new_colour.g + (modifiers[4] - 2) * 10), 255), 0)
+                    new_colour.b = max(min((new_colour.b + (modifiers[4] - 2) * 10), 255), 0)
+                    if modifiers[1] > -1:
+                        if modifiers[1] == 0:
+                            new_colour.b = min((new_colour.b + (modifiers[2] + 1) * 10), 255)
+                        elif modifiers[1] == 1:
+                            new_colour.b = min((new_colour.b + (modifiers[2] + 1) * 10), 255)
+                            new_colour.g = min((new_colour.g + (modifiers[2] + 1) * 10), 255)
+                        elif modifiers[1] == 2:
+                            new_colour.g = min((new_colour.g + (modifiers[2] + 1) * 10), 255)
+                        elif modifiers[1] == 3:
+                            new_colour.r = min((new_colour.r + (modifiers[2] + 1) * 10), 255)
+                blade.set_at((x, y), new_colour)
+        return blade
+
+    @staticmethod
+    def generate_bonus(bonus, modifiers):
+        for x in range(0, bonus.get_width()):
+            for y in range(0, bonus.get_height()):
+                new_colour = bonus.get_at((x, y))
+                if modifiers[3] == -1:
+                    new_colour.a = 0
+                elif modifiers[3] == 1:
+                    aux = new_colour.g
+                    new_colour.g = new_colour.b
+                    new_colour.b = aux
+                bonus.set_at((x, y), new_colour)
+        return bonus
+
+    @staticmethod
+    def generate_texture(modifiers, handle, blade, bonus):
+
+        texture = pygame.Surface((168, 24))
+        texture.blit(Weapon.generate_bonus(bonus, modifiers), (0, 0))
+        texture.blit(Weapon.generate_blade(blade, modifiers), (0, 0))
+        texture.blit(handle, (0, 0))
+
+        return texture
+
+    def __init__(self, is_custom = False):   # If we want to create a custom item we have to set isCustom to True
         Item.__init__(self)
-        #if not isCustom:
-        modifiers = Weapon.generate_modifiers(self)
+
+        # if not isCustom:
+        modifiers = Weapon.generate_modifiers()
         weapon_type = random.randint(0, 3)
+        self.weapon_texture = Weapon.generate_texture(
+                                                    modifiers,
+                                                    pygame.image.load(Helper.handle_path).convert_alpha(),
+                                                    pygame.image.load(Helper.blade_path).convert_alpha(),
+                                                    pygame.image.load(Helper.bonus_path).convert_alpha()
+                                                    )   # not entirely sure how I should pass the parameters
         self.type = weapon_type
+        self.modifiers = modifiers
         self.name = Weapon.generate_name(self, modifiers, weapon_type)
 
 
-def weapon_generator():     # Generates random weapons twice per second
-    while True:
-        weapon = Weapon()
-        print(weapon.name)
-        time.sleep(0.5)
+def generate_weapon():     # Generates random weapons twice per second
+    weapon = Weapon()
+    print('Generated: ' + weapon.name)
+    screen.blit(weapon.weapon_texture, (0, 0))
+    pygame.display.flip()
+    # time.sleep(1.5)
