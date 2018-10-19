@@ -11,7 +11,7 @@ screen = pygame.display.set_mode((windowWidth, windowHeight), 0, 32)
 pygame.display.set_caption('Debugger for weapon generation')
 
 pygame.font.init()
-my_font = pygame.font.SysFont('Inverted', 24)
+my_font = pygame.font.SysFont('Arial', 24)     # initially I used the font provided by Cyrus
 
 finished = False
 
