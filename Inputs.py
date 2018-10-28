@@ -1,17 +1,20 @@
-import pygame, LoadImages
+import pygame
 from pygame.locals import *
 
 pygame.init()
 
 # variables
-swipeDistance = 100  # distance needed to swipe for input to be recognised as a swipe, rather than a tap
-inputCommand = 'none'
+swipeDistance = 100  # distance needed to swipe for input to be recognised
+# as a swipe, rather than a tap (maybe should be in helper.py?)
 
 # def character_action(action):
-    # ^ this should probably exist on the player script, not the inputs script
+# ^ this should probably exist on the player script, not the inputs script
 
 
 def read_mouse_movements(mouse_down_x, mouse_down_y):
+
+    input_command = 'none'
+
     reading_mouse_change = True
     while reading_mouse_change:  # while loop to read mouse/swipe movements
 
@@ -24,16 +27,19 @@ def read_mouse_movements(mouse_down_x, mouse_down_y):
                 reading_mouse_change = False
 
                 if input_distance_h >= swipeDistance:
-                    inputCommand = 'move_right'
+                    input_command = 'move_right'
                 elif input_distance_h <= -swipeDistance:
-                    inputCommand = 'move_left'
+                    input_command = 'move_left'
                 elif input_distance_v >= swipeDistance:
-                    inputCommand = 'close_inv?'
+                    input_command = 'close_inv?'
                 elif input_distance_v <= -swipeDistance:
-                    inputCommand = 'open_inv'
-                elif abs(input_distance_h) < swipeDistance and abs(input_distance_v) < swipeDistance:
-                    inputCommand = 'attack'
+                    input_command = 'open_inv'
+                elif abs(input_distance_h) < swipeDistance\
+                        and\
+                        abs(input_distance_v) < swipeDistance:
+                    input_command = 'attack'
 
-                # character_action(inputCommand)
-                    # ^ call the action (move, attack, etc.) uncomment when this is implemented
+                # character_action(input_command)
+                    # ^ call the action (move, attack, etc.)
+                    # uncomment when this is implemented
 

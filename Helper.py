@@ -17,7 +17,9 @@ Modifiers_Elemental_Colours = ((28, 58, 89), (244, 213, 141), (28, 89, 29), (206
 # Usage: Select element from tuples and parse it to generator
 
 # Order: Quality + WEAPON_NAME + 'OF' +  Modifiers_Elemental + (Modifier_Bonus) 
-                                                         # (Modifier_Bonus won't be in name of weapon, will only be seen in item specs screen)
+    # (Modifier_Bonus won't be in name of weapon,
+    # will only be seen in item specs screen)
+
 # Example: Chipped Nodachi of Smoulders (Cursed)
 
 # Helper function
