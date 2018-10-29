@@ -34,6 +34,14 @@ class Player(Entity):
     def __init__(self): # hi
         Entity.__init__(self)
 
+    @staticmethod
+    def player_action(action):
+        print(action)
+
+    @staticmethod
+    def player_move(direction):
+        pass
+
 
 class Enemy(Entity):
 

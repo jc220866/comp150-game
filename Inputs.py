@@ -1,14 +1,13 @@
+import Classes
+import Helper
 import pygame
 from pygame.locals import *
 
 pygame.init()
 
 # variables
-swipeDistance = 100  # distance needed to swipe for input to be recognised
-# as a swipe, rather than a tap (maybe should be in helper.py?)
-
-# def character_action(action):
-# ^ this should probably exist on the player script, not the inputs script
+swipeDistance = Helper.SWIPE_DISTANCE
+player = Classes.Player
 
 
 def read_mouse_movements(mouse_down_x, mouse_down_y):
@@ -39,7 +38,4 @@ def read_mouse_movements(mouse_down_x, mouse_down_y):
                         abs(input_distance_v) < swipeDistance:
                     input_command = 'attack'
 
-                # character_action(input_command)
-                    # ^ call the action (move, attack, etc.)
-                    # uncomment when this is implemented
-
+                player.player_action(input_command)

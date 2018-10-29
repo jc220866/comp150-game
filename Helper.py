@@ -36,4 +36,7 @@ Modifiers_Elemental_Colours = ((28, 58, 89),
 
 # Example: Chipped Nodachi of Smoulders (Cursed)
 
+# distance needed to swipe for input to be
+# recognised as a swipe, rather than a tap
+SWIPE_DISTANCE = 100
 
