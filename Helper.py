@@ -31,7 +31,9 @@ Modifiers_Elemental_Colours = ((28, 58, 89),
 # Example: Chipped Nodachi of Smoulders +2 (Cursed)
 
 # Order: Quality + WEAPON_NAME + 'OF' +  Modifiers_Elemental + (Modifier_Bonus) 
-                                                         # (Modifier_Bonus won't be in name of weapon, will only be seen in item specs screen)
+    # (Modifier_Bonus won't be in name of weapon,
+    # will only be seen in item specs screen)
+
 # Example: Chipped Nodachi of Smoulders (Cursed)
 
 
