@@ -10,8 +10,9 @@ swipeDistance = Helper.SWIPE_DISTANCE
 player = Classes.Player()
 
 
-def read_mouse_movements(mouse_down_x, mouse_down_y):
+def read_mouse_movements(mouse_position):
 
+    mouse_down_x, mouse_down_y = mouse_position
     input_command = 'none'
 
     reading_mouse_change = True
