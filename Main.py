@@ -1,11 +1,11 @@
-import pygame, sys
+import pygame, sys, LoadImages, Inputs
 from pygame.locals import *
 
 pygame.init()
 
 # variables
 refreshRate = 60
-resolution = (750, 1000)
+resolution = (750, 1334)
 # colours
 darkBrown = (79, 51, 44)
 lightBrown = (107, 74, 55)
@@ -26,9 +26,12 @@ displaySurface.fill(darkBrown)
 while True:
 
     for event in pygame.event.get():
-        if event.type == QUIT:
+        if event.type == QUIT or (event.type == KEYUP and event.key == K_ESCAPE):
             pygame.quit()
             sys.exit()
+        elif event.type == MOUSEBUTTONDOWN:  # start to read input
+            mouseX, mouseY = event.pos
+            Inputs.read_mouse_movements(mouseX, mouseY)
 
     # redraw display
     pygame.display.flip()
