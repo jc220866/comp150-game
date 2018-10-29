@@ -7,7 +7,7 @@ pygame.init()
 
 # variables
 swipeDistance = Helper.SWIPE_DISTANCE
-player = Classes.Player
+player = Classes.Player()
 
 
 def read_mouse_movements(mouse_down_x, mouse_down_y):

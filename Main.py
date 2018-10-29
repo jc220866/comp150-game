@@ -1,4 +1,7 @@
-import pygame, sys, LoadImages, Inputs
+import pygame
+import sys
+import ImageFiles
+import Inputs
 from pygame.locals import *
 
 pygame.init()

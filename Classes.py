@@ -1,12 +1,10 @@
 # Classes used by Entity type Objects
 import Helper
+import ImageFiles
 import random
 import pygame
 
-screen_width = int(750 / 3)
-screen_height = int(1334 / 3)
 
-screen = pygame.display.set_mode((screen_width, screen_height))
 
 
 class Entity:
@@ -31,16 +29,25 @@ class Entity:
 
 class Player(Entity):
 
-    def __init__(self): # hi
+    playerLanes = ['L', 'M', 'R']  # the three lanes-will be referenced with []
+    playerSurf = ImageFiles.images['Player']
+    playerRect = playerSurf.get_rect()  # I don't know how rectangles work
+    # may be useful: https://www.pygame.org/docs/tut/MoveIt.html
+
+    def __init__(self):
         Entity.__init__(self)
 
     @staticmethod
     def player_action(action):
         print(action)
+        Player.player_move('move_left', 1)
 
     @staticmethod
-    def player_move(direction):
-        pass
+    def player_move(direction, current_lane):  # needs four directions
+        if direction == 'move_right' and current_lane < 2:
+            pass
+        elif direction == 'move_left' and current_lane > 0:
+            pass
 
 
 class Enemy(Entity):
