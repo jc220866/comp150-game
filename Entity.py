@@ -1,4 +1,6 @@
 import pygame
+import ImageFiles
+import Helper
 # Classes used by Entity type Objects
 
 

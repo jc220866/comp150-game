@@ -9,7 +9,7 @@ pygame.init()
 swipeDistance = Helper.SWIPE_DISTANCE
 
 
-def read_mouse_movements(mouse_position):
+def read_mouse_movements(mouse_position, player):
 
     mouse_down_x, mouse_down_y = mouse_position
     input_command = 'none'
@@ -38,4 +38,4 @@ def read_mouse_movements(mouse_position):
                         abs(input_distance_v) < swipeDistance:
                     input_command = 'attack'
 
-                Player.player_action(input_command)
+                player.player_action(input_command)
