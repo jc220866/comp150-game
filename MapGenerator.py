@@ -12,7 +12,7 @@ screen = pygame.display.set_mode((windowWidth, windowHeight), 0, 32)
 pygame.display.set_caption('Map Generation')
 
 tilemap = pygame.image.load(
-    './Resources/Visual/Textures/Tilemaps/Tilemap_export.png').convert_alpha()
+    './Resources/Visual/Textures/Tilemaps/tilemap_export.png').convert_alpha()
 tile_path = './Resources/Visual/Textures/Tiles/'
 
 # Number of tiles on the x and y axis
@@ -46,7 +46,7 @@ def separate_tiles(size_x, size_y, tilemap, path, index):
 
             tile_area = pygame.Rect(y * 25, x * 25, 24, 24)
             tile = tilemap.subsurface(tile_area)
-            pygame.image.save(tile, path + 'Tile' + str(index) + '.png')
+            pygame.image.save(tile, path + 'tile' + str(index) + '.png')
             index += 1
 
     print('Finished splitting')

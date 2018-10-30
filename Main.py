@@ -1,11 +1,16 @@
-import pygame, sys, LoadImages, Inputs
+import pygame
+import sys
+import Helper
+import Inputs
+import Player
 from pygame.locals import *
 
 pygame.init()
 
+
 # variables
 refreshRate = 60
-resolution = (750, 1334)
+
 # colours
 darkBrown = (79, 51, 44)
 lightBrown = (107, 74, 55)
@@ -16,25 +21,30 @@ darkGrey = (63, 63, 63)
 midGrey = (127, 127, 127)
 lightGrey = (191, 191, 191)
 
-# guff
-displaySurface = pygame.display.set_mode(resolution)
+displaySurface = pygame.display.set_mode(Helper.RESOLUTION)
 clock = pygame.time.Clock()
 pygame.display.set_caption('Sekai Saviour')
 displaySurface.fill(darkBrown)
 
 # game loop
-while True:
+running = True
+while running:
 
     for event in pygame.event.get():
-        if event.type == QUIT or (event.type == KEYUP and event.key == K_ESCAPE):
-            pygame.quit()
-            sys.exit()
-        elif event.type == MOUSEBUTTONDOWN:  # start to read input
-            mouseX, mouseY = event.pos
-            Inputs.read_mouse_movements(mouseX, mouseY)
+        if event.type == QUIT:
+            running = False
+        elif event.type == KEYUP:
+            if event.key == K_ESCAPE:
+                running = False
+        elif event.type == MOUSEBUTTONDOWN:  # start to read swipe input
+            Inputs.read_mouse_movements(event.pos)
+            displaySurface.blit(Player.playerSurf, Player.playerPos)
 
     # redraw display
     pygame.display.flip()
 
     # cap fps
     clock.tick(refreshRate)
+
+pygame.quit()
+sys.exit()
