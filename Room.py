@@ -22,11 +22,10 @@ class Room:
 
 
 class RoomTutorial(Room):
+
     def __init__(self):
         Room.__init__(self)
         self.texture = Room.attach_texture(Helper.room_tutorial_path)
-
-
 
 
 class RoomEncounter(Room):
