@@ -1,3 +1,5 @@
+RESOLUTION = (750, 1334)
+
 # Tuples containing elements for naming items, rooms, entities etc
 
 Affinities = ('Chaos', 'Abyss', 'Void', 'Eldritch')
@@ -48,38 +50,4 @@ room_encounter_type = (
                        'rubble on the road'
                        )
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+SWIPE_DISTANCE = 100

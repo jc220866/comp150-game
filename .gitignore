@@ -35,10 +35,8 @@
 .idea/
 *.sln.iml
 
-
-
-
-
+# Pycharm
+venv/
 
 # PaintDotNetFiles
 *.pdn
