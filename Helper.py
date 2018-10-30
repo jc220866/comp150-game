@@ -45,4 +45,5 @@ room_encounter_type = (
                        'rubble on the road'
                        )
 
-SWIPE_DISTANCE = 100
+SWIPE_DISTANCE = 100  # distance moved for input to be registered as a swipe
+MOVE_DISTANCE = 160  # distance the onscreen character moves

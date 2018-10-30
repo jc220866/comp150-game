@@ -10,7 +10,7 @@ images['DeadTree'] = pygame.image.load(
     'Resources/Visual/Textures/Sprites/dead_tree.png'
     )
 images['Background'] = pygame.image.load(
-    'Resources/Visual/Textures/Background/landscape.jpg'
+    'Resources/Visual/Textures/Background/room0.png'
     )
 images['Player'] = pygame.image.load(
     'Resources/Visual/Textures/Sprites/player.png'
