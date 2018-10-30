@@ -1,5 +1,6 @@
 import pygame
 import sys
+import ImageFiles
 import Helper
 import Inputs
 import Player
@@ -25,10 +26,14 @@ displaySurface = pygame.display.set_mode(Helper.RESOLUTION)
 clock = pygame.time.Clock()
 pygame.display.set_caption('Sekai Saviour')
 displaySurface.fill(darkBrown)
+player = Player.Player()
 
 # game loop
 running = True
 while running:
+
+    displaySurface.blit(ImageFiles.images['Background'], (0, 0))
+    displaySurface.blit(player.playerSurf, player.playerPos)
 
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -37,8 +42,12 @@ while running:
             if event.key == K_ESCAPE:
                 running = False
         elif event.type == MOUSEBUTTONDOWN:  # start to read swipe input
-            Inputs.read_mouse_movements(event.pos)
-            displaySurface.blit(Player.playerSurf, Player.playerPos)
+            Inputs.read_mouse_movements(event.pos, player)
+            '''
+            displaySurface.blit(ImageFiles.images['Background'], (0, 0))
+            # print(ImageFiles.images['Background'].get_size())
+            displaySurface.blit(Player.Player.playerSurf, Player.Player.playerPos)
+            # print(ImageFiles.images['Player'].get_size())'''
 
     # redraw display
     pygame.display.flip()
