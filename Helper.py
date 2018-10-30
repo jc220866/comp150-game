@@ -12,7 +12,6 @@ Quality = ('Broken', 'Chipped', 'Mundane', 'Tempered', 'Pristine')
 Weapons = ('Nodachi', 'Katana', 'Tekkan', 'Hachiwari')
 Upgrades = ('+0', '+1', '+2', '+3', '+4', '+5')
 
-
 # Saving weapon image file paths into separate variables:
 
 handle_path = './Resources/Visual/Textures/Items/handle.png'
