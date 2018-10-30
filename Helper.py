@@ -1,3 +1,5 @@
+RESOLUTION = (750, 1334)
+
 # Tuples containing elements for naming items, rooms, entities etc
 
 Affinities = ('Chaos', 'Abyss', 'Void', 'Eldritch')
@@ -15,8 +17,7 @@ Upgrades = ('+0', '+1', '+2', '+3', '+4', '+5')
 
 handle_path = './Resources/Visual/Textures/Items/handle.png'
 blade_path = './Resources/Visual/Textures/Items/blade.png'
-bonus_path = './Resources/Visual/Textures/Items/Bonus.png'
-bonus_path = './Resources/Visual/Textures/Items/Bonus.png'
+bonus_path = './Resources/Visual/Textures/Items/bonus.png'
 
 handle_thumbnail_path = './Resources/Visual/Textures/Items/handle_thumbnail.png'
 blade_thumbnail_path = './Resources/Visual/Textures/Items/blade_thumbnail.png'
@@ -45,38 +46,4 @@ room_encounter_type = (
                        'rubble on the road'
                        )
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+SWIPE_DISTANCE = 100

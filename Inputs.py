@@ -1,4 +1,4 @@
-import Classes
+import Player
 import Helper
 import pygame
 from pygame.locals import *
@@ -7,7 +7,6 @@ pygame.init()
 
 # variables
 swipeDistance = Helper.SWIPE_DISTANCE
-player = Classes.Player()
 
 
 def read_mouse_movements(mouse_position):
@@ -39,4 +38,4 @@ def read_mouse_movements(mouse_position):
                         abs(input_distance_v) < swipeDistance:
                     input_command = 'attack'
 
-                player.player_action(input_command)
+                Player.player_action(input_command)
