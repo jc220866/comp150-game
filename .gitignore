@@ -37,3 +37,6 @@
 
 # Pycharm
 venv/
+
+# PaintDotNetFiles
+*.pdn
