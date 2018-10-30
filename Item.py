@@ -231,3 +231,8 @@ class Weapon(Item):
         # Generation of name
         self.name = Weapon.generate_name(modifiers, weapon_type)
 
+
+class Potion(Item):
+
+    stat_restored = ''
+    amount_restored = 0
