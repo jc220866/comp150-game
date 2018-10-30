@@ -20,6 +20,11 @@ handle_thumbnail_path = './Resources/Visual/Textures/Items/handle_thumbnail.png'
 blade_thumbnail_path = './Resources/Visual/Textures/Items/blade_thumbnail.png'
 bonus_thumbnail_path = './Resources/Visual/Textures/Items/bonus_thumbnail.png'
 
+potion_spirit_path = './Resources/Visual/Textures/Items/spirit.png'
+potion_body_path = './Resources/Visual/Textures/Items/body.png'
+
+room_tutorial_path = './Resources/Visual/Textures/Rooms/room.png'
+
 # Defining colors for the 4 elements
 
 Modifiers_Elemental_Colours = ((28, 58, 89),
