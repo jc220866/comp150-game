@@ -3,7 +3,7 @@ import pygame
 pygame.init()
 
 images = dict()
-images['TileMap'] = pygame.image.load(
+images['Tilemap'] = pygame.image.load(
     'Resources/Visual/Textures/Tilemaps/tilemap_export.png'
     )
 
@@ -12,7 +12,7 @@ images['DeadTree'] = pygame.image.load(
     )
 
 images['Background'] = pygame.image.load(
-    'Resources/Visual/Textures/Background/room0.png'
+    'Resources/Visual/Textures/Rooms/room.png'
     )
 
 images['Player'] = pygame.image.load(

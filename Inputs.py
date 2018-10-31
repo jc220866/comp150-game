@@ -9,7 +9,7 @@ pygame.init()
 swipeDistance = Helper.SWIPE_DISTANCE
 
 
-def read_mouse_movements(mouse_position, player):
+def read_mouse_movements(mouse_position, player, surface_to_blit_to):
 
     mouse_down_x, mouse_down_y = mouse_position
     input_command = 'none'
