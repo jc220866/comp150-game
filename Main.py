@@ -13,25 +13,48 @@ pygame.init()
 # variables
 refreshRate = 60
 
-# colours
-darkBrown = (79, 51, 44)
-lightBrown = (107, 74, 55)
-darkYellow = (124, 91, 51)
-lightYellow = (147, 117, 53)
-black = (0, 0, 0)
-darkGrey = (63, 63, 63)
-midGrey = (127, 127, 127)
-lightGrey = (191, 191, 191)
-
 displaySurface = pygame.display.set_mode(Helper.RESOLUTION)
 clock = pygame.time.Clock()
 pygame.display.set_caption('Sekai Saviour')
-displaySurface.fill(darkBrown)
+displaySurface.fill(Helper.darkBrown)
 player = Player.Player()
+MapGenerator.run_separator()
 
 # game loop
 running = True
-MapGenerator.run_separator()
+
+
+def player_action(action, Player):
+    """For now, this always fires player move - this is just for testing"""
+    print(action)
+    if 'move' in action:
+        player_move(action, Player)
+    elif 'idle' == action:
+        pass
+
+
+def player_move(direction, Player):  # needs four directions
+    if direction == 'move_right' and Player.currentLane < 1:
+        player_destination = Player.playerPos[0] + Player.moveDistance
+        Player.currentLane += 1
+
+        while Player.playerPos[0] < player_destination:
+            Player.playerPos[0] += Helper.MOVE_SPEED  # needs a loop in the "Main" script?
+            displaySurface.blit(ImageFiles.images['Background'], (0, 0))
+            displaySurface.blit(Player.image, (Player.playerPos[0], Player.playerPos[1]))
+            pygame.display.flip()
+
+    elif direction == 'move_left' and Player.currentLane > -1:
+        player_destination = Player.playerPos[0] - Player.moveDistance
+        Player.currentLane -= 1
+
+        while Player.playerPos[0] > player_destination:
+            Player.playerPos[0] -= Helper.MOVE_SPEED  # needs a loop in the "Main" script?
+            displaySurface.blit(ImageFiles.images['Background'], (0, 0))
+            displaySurface.blit(Player.image, (Player.playerPos[0], Player.playerPos[1]))
+
+            pygame.display.flip()
+
 
 while running:
 
@@ -43,7 +66,9 @@ while running:
             if event.key == K_ESCAPE:
                 running = False
         elif event.type == MOUSEBUTTONDOWN:  # start to read swipe input
-            Inputs.read_mouse_movements(event.pos, player, displaySurface)
+            player_action(Inputs.read_mouse_movements(event.pos, player), player)
+        else:
+            player_action('idle', player)
 
     # game loop action section
 

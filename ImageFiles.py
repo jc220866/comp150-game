@@ -17,7 +17,7 @@ images['DeadTree'] = pygame.image.load(
     ).convert_alpha()
 
 images['Background'] = pygame.image.load(
-    './Resources/Visual/Background/room0.png'
+    './Resources/Visual/Rooms/room.png'
     )
 
 images['Player'] = pygame.image.load(
