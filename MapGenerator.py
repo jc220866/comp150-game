@@ -56,6 +56,14 @@ def separate_tiles(size_x, size_y, tilemap, path, index):
     print('Finished removing empty tiles')
 
 
+# Removes tiles at end of game
+def all_tile_removal(path):
+
+    for filename in os.listdir(path):
+        if filename.endswith('.png'):
+            os.remove(path + filename)
+
+
 finished = False
 
 while finished is False:    # Basic game loop
