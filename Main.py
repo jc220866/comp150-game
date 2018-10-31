@@ -58,6 +58,7 @@ def player_move(direction, Player):  # needs four directions
 
 
 game_state = 'Main_Menu'
+is_paused = False
 
 while running:
 
@@ -66,23 +67,27 @@ while running:
 
     while game_state == 'New_Game' and running:
         # game loop event handling section
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                running = False
-            elif event.type == KEYUP:
-                if event.key == K_ESCAPE:
+        if is_paused == False:
+            for event in pygame.event.get():
+                if event.type == QUIT:
                     running = False
-            elif event.type == MOUSEBUTTONDOWN:  # start to read swipe input
-                player_action(Inputs.read_mouse_movements(event.pos, player), player)
-            else:
-                player_action('idle', player)
+                elif event.type == KEYUP:
+                    if event.key == K_ESCAPE:
+                        running = False
+                elif event.type == MOUSEBUTTONDOWN:  # start to read swipe input
+                    player_action(Inputs.read_mouse_movements(event.pos, player), player)
+                else:
+                    player_action('idle', player)
 
-        # game loop action section
+            # game loop action section
 
-        # game loop display section
-        displaySurface.blit(ImageFiles.images['Background'], (0, 0))
-        displaySurface.blit(player.playerSurf, player.playerPos)
-        pygame.display.flip()
+            # game loop display section
+            displaySurface.blit(ImageFiles.images['Background'], (0, 0))
+            displaySurface.blit(player.playerSurf, player.playerPos)
+            pygame.display.flip()
+        else:
+            print('GAME IS PAUSED')
+            pygame.time.delay(300)
 
     # cap fps
     clock.tick(refreshRate)
