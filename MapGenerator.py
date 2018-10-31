@@ -1,15 +1,14 @@
 import pygame
 import ImageFiles
 import os
+import Helper
 
 """Map Generation, including tile separation"""
 
 pygame.init()
 
-windowHeight = 150
-windowWidth = 450
 
-screen = pygame.display.set_mode((windowWidth, windowHeight), 0, 32)
+screen = pygame.display.set_mode(Helper.RESOLUTION, 0, 32)
 pygame.display.set_caption('Map Generation')
 
 tilemap = ImageFiles.images['Tilemap'].convert_alpha()
