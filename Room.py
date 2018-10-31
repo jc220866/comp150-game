@@ -1,6 +1,7 @@
 import random
 import pygame
 import Helper
+import ImageFiles
 
 # Classes used by Room type Objects
 
@@ -16,16 +17,12 @@ class Room:
     def generate_tutorial():
         rooms_tutorial = [RoomTutorial()]
 
-    @staticmethod
-    def attach_texture(path):
-        return pygame.image.load(path)
-
 
 class RoomTutorial(Room):
 
     def __init__(self):
         Room.__init__(self)
-        self.texture = Room.attach_texture(Helper.room_tutorial_path)
+        self.texture = ImageFiles.images['Rooms']['Tutorial']
 
 
 class RoomEncounter(Room):
