@@ -10,6 +10,7 @@ class Player(pygame.sprite.Sprite):
     playerRect = playerSurf.get_rect()
     playerPos = [Helper.RESOLUTION[0] * 0.5 - playerSurf.get_width() * 0.5,
                  Helper.RESOLUTION[1] * 0.2 - playerSurf.get_height() * 0.5
+                 + 250
                  ]  # (311.0, 202.8 for 750x1334 resolution)
     moveDistance = Helper.MOVE_DISTANCE
 

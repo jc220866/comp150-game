@@ -61,3 +61,9 @@ images['Rooms'] = dict()
 images['Rooms']['Tutorial'] = pygame.image.load(
     './Resources/Visual/Items/body.png'
 ).convert_alpha()
+
+images['UI'] = dict()
+
+images['UI']['Menu_Button'] = pygame.image.load(
+    './Resources/Visual/UI/Menu_Button.png'
+).convert_alpha()

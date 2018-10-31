@@ -2,6 +2,7 @@ import pygame
 import sys
 import ImageFiles
 import Helper
+import Menu
 import Inputs
 import Player
 import MapGenerator
@@ -56,26 +57,32 @@ def player_move(direction, Player):  # needs four directions
             pygame.display.flip()
 
 
+game_state = 'Main_Menu'
+
 while running:
 
-    # game loop event handling section
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            running = False
-        elif event.type == KEYUP:
-            if event.key == K_ESCAPE:
+    while game_state == 'Main_Menu' and running:
+        game_state = Menu.menu_update()
+
+    while game_state == 'New_Game' and running:
+        # game loop event handling section
+        for event in pygame.event.get():
+            if event.type == QUIT:
                 running = False
-        elif event.type == MOUSEBUTTONDOWN:  # start to read swipe input
-            player_action(Inputs.read_mouse_movements(event.pos, player), player)
-        else:
-            player_action('idle', player)
+            elif event.type == KEYUP:
+                if event.key == K_ESCAPE:
+                    running = False
+            elif event.type == MOUSEBUTTONDOWN:  # start to read swipe input
+                player_action(Inputs.read_mouse_movements(event.pos, player), player)
+            else:
+                player_action('idle', player)
 
-    # game loop action section
+        # game loop action section
 
-    # game loop display section
-    displaySurface.blit(ImageFiles.images['Background'], (0, 0))
-    displaySurface.blit(player.playerSurf, player.playerPos)
-    pygame.display.flip()
+        # game loop display section
+        displaySurface.blit(ImageFiles.images['Background'], (0, 0))
+        displaySurface.blit(player.playerSurf, player.playerPos)
+        pygame.display.flip()
 
     # cap fps
     clock.tick(refreshRate)

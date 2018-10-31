@@ -25,15 +25,20 @@ def drawmenu():  # Draws rectangles to represent the 'buttons'
     pygame.draw.rect(DISPLAYSURFACE, BUTTONGOLD, buttonQuit)
 
 
-def checkbuttons():  # Checks which 'button' was clicked, can assign functions to each separate button
+def checkbuttons(clickPos):  # Checks which 'button' was clicked, can assign functions to each separate button
     if buttonNewGame.collidepoint(clickPos):
         print("Button clicked: New Game")
+        return 'New_Game'
     if buttonContinue.collidepoint(clickPos):
         print("Button clicked: Continue")
+        return 'Continue'
     if buttonSettings.collidepoint(clickPos):
         print("Button clicked: Settings")
+        return 'Settings'
     if buttonQuit.collidepoint(clickPos):
         print("Button clicked: Quit")
+        return 'Quit'
+    return 'Main_Menu'
 
 
 def highlightbuttons(mx, my):  # Draws a highlight over a button when moused over
@@ -47,19 +52,22 @@ def highlightbuttons(mx, my):  # Draws a highlight over a button when moused ove
         pygame.draw.rect(DISPLAYSURFACE, HIGHLIGHT, buttonQuit)
 
 
-while True:
-    DISPLAYSURFACE.fill(BLACK)
-    drawmenu()
+def menu_update():
+    while True:
+        DISPLAYSURFACE.fill(BLACK)
+        drawmenu()
 
-    for event in pygame.event.get():
-        if event.type == QUIT or (event.type == KEYUP and event.key == K_ESCAPE):
-            pygame.quit()
-        elif event.type == MOUSEMOTION:
-            mousex, mousey = event.pos  # stores most recent mouse movement in two variables
-        elif event.type == MOUSEBUTTONUP:
-            clickPos = pygame.mouse.get_pos()
-            checkbuttons()              # when the mouse button is clicked, we check if a button was clicked
+        mousex = mousey = 0
 
-    highlightbuttons(mousex, mousey)
-    pygame.display.update()
-    fpsClock.tick(FPS)
+        for event in pygame.event.get():
+            if event.type == QUIT or (event.type == KEYUP and event.key == K_ESCAPE):
+                pygame.quit()
+            elif event.type == MOUSEMOTION:
+                mousex, mousey = event.pos  # stores most recent mouse movement in two variables
+            elif event.type == MOUSEBUTTONUP:
+                clickPos = pygame.mouse.get_pos()
+                return checkbuttons(clickPos)              # when the mouse button is clicked, we check if a button was clicked
+
+        highlightbuttons(mousex, mousey)
+        pygame.display.update()
+        fpsClock.tick(FPS)
