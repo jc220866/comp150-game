@@ -14,7 +14,7 @@ pygame.init()
 # variables
 refreshRate = 60
 
-displaySurface = pygame.display.set_mode(Helper.RESOLUTION)
+displaySurface = Helper.displaySurface
 clock = pygame.time.Clock()
 pygame.display.set_caption('Sekai Saviour')
 displaySurface.fill(Helper.darkBrown)
@@ -23,38 +23,6 @@ MapGenerator.run_separator()
 
 # game loop
 running = True
-
-
-def player_action(action, Player):
-    """For now, this always fires player move - this is just for testing"""
-    print(action)
-    if 'move' in action:
-        player_move(action, Player)
-    elif 'idle' == action:
-        pass
-
-
-def player_move(direction, Player):  # needs four directions
-    if direction == 'move_right' and Player.currentLane < 1:
-        player_destination = Player.playerPos[0] + Player.moveDistance
-        Player.currentLane += 1
-
-        while Player.playerPos[0] < player_destination:
-            Player.playerPos[0] += Helper.MOVE_SPEED  # needs a loop in the "Main" script?
-            displaySurface.blit(ImageFiles.images['Background'], (0, 0))
-            displaySurface.blit(Player.image, (Player.playerPos[0], Player.playerPos[1]))
-            pygame.display.flip()
-
-    elif direction == 'move_left' and Player.currentLane > -1:
-        player_destination = Player.playerPos[0] - Player.moveDistance
-        Player.currentLane -= 1
-
-        while Player.playerPos[0] > player_destination:
-            Player.playerPos[0] -= Helper.MOVE_SPEED  # needs a loop in the "Main" script?
-            displaySurface.blit(ImageFiles.images['Background'], (0, 0))
-            displaySurface.blit(Player.image, (Player.playerPos[0], Player.playerPos[1]))
-
-            pygame.display.flip()
 
 
 game_state = 'Main_Menu'
@@ -75,9 +43,9 @@ while running:
                     if event.key == K_ESCAPE:
                         running = False
                 elif event.type == MOUSEBUTTONDOWN:  # start to read swipe input
-                    player_action(Inputs.read_mouse_movements(event.pos, player), player)
+                    player.player_action(Inputs.read_mouse_movements(event.pos, player), player)
                 else:
-                    player_action('idle', player)
+                    player.player_action('idle', player)
 
             # game loop action section
 
