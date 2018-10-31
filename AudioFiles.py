@@ -3,7 +3,7 @@ import random
 
 '''import pygame as pygame'''
 
-AudioDict = {}
+AudioDict = dict()
 
 AudioDict['open_menu_sound'] = pygame.mixer.Sound('ergferg.wav')
 
