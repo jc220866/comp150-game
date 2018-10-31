@@ -1,6 +1,7 @@
 import Helper
 import random
 import pygame
+import ImageFiles
 # Classes used by Item type Objects
 
 
@@ -214,16 +215,16 @@ class Weapon(Item):
 
         self.weapon_texture = Weapon.generate_texture(
             modifiers,
-            pygame.image.load(Helper.handle_path).convert_alpha(),
-            pygame.image.load(Helper.blade_path).convert_alpha(),
-            pygame.image.load(Helper.bonus_path).convert_alpha()
+            ImageFiles.images['Handle'],
+            ImageFiles.images['Blade'],
+            ImageFiles.images['Bonus']
         )
 
         self.weapon_thumbnail = Weapon.generate_texture(
             modifiers,
-            pygame.image.load(Helper.handle_thumbnail_path).convert_alpha(),
-            pygame.image.load(Helper.blade_thumbnail_path).convert_alpha(),
-            pygame.image.load(Helper.bonus_thumbnail_path).convert_alpha()
+            ImageFiles.images['Handle_Thumbnail'],
+            ImageFiles.images['Blade_Thumbnail'],
+            ImageFiles.images['Bonus_Thumbnail']
         )
 
         self.type = weapon_type

@@ -4,6 +4,7 @@ import ImageFiles
 import Helper
 import Inputs
 import Player
+import MapGenerator
 from pygame.locals import *
 
 pygame.init()
@@ -30,6 +31,8 @@ player = Player.Player()
 
 # game loop
 running = True
+MapGenerator.run_separator()
+
 while running:
 
     displaySurface.blit(ImageFiles.images['Background'], (0, 0))
@@ -54,6 +57,8 @@ while running:
 
     # cap fps
     clock.tick(refreshRate)
+
+MapGenerator.run_remover()
 
 pygame.quit()
 sys.exit()

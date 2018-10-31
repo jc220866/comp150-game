@@ -1,4 +1,5 @@
 import pygame
+import ImageFiles
 import os
 
 """Map Generation, including tile separation"""
@@ -11,9 +12,8 @@ windowWidth = 450
 screen = pygame.display.set_mode((windowWidth, windowHeight), 0, 32)
 pygame.display.set_caption('Map Generation')
 
-tilemap = pygame.image.load(
-    './Resources/Visual/Textures/Tilemaps/tilemap_export.png').convert_alpha()
-tile_path = './Resources/Visual/Textures/Tiles/'
+tilemap = ImageFiles.images['Tilemap'].convert_alpha()
+tile_path = './Resources/Visual/Tiles/'
 
 # Number of tiles on the x and y axis
 tilemap_size_x = 9
@@ -66,14 +66,10 @@ def all_tile_removal(path):
 
 finished = False
 
-while finished is False:    # Basic game loop
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            finished = True
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            finished = True
-        # when 'g' is pressed a random item is generated
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_a:
-            separate_tiles(tilemap_size_x, tilemap_size_y, tilemap, tile_path, tile_index)
-        pygame.display.update()
+def run_separator():
+    separate_tiles(tilemap_size_x, tilemap_size_y, tilemap, tile_path, tile_index)
+
+
+def run_remover():
+    all_tile_removal(tile_path)
