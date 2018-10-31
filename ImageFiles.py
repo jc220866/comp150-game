@@ -1,11 +1,9 @@
 import pygame
+import Helper
 
 pygame.init()
 
-windowHeight = 150
-windowWidth = 450
-
-screen = pygame.display.set_mode((windowWidth, windowHeight), 0, 32)
+screen = pygame.display.set_mode(Helper.RESOLUTION, 0, 32)
 
 images = dict()
 images['Tilemap'] = pygame.image.load(
