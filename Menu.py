@@ -1,16 +1,18 @@
 import pygame
+import sys
 from pygame.locals import *
 
 pygame.init()
 FPS = 60
 fpsClock = pygame.time.Clock()
-DISPLAYSURFACE = pygame.display.set_mode((750, 1000), 0, 32)
-pygame.display.set_caption('S E K A I SAVIOR')
+DISPLAY_SURFACE = pygame.display.set_mode((750, 1000), 0, 32)
+pygame.display.set_caption('Sekai Saviour')
 
 BLACK = (0, 0, 0)                # currently used for the background
-BACKGROUNDGOLD = (124, 91, 51)   # currently unused
-BUTTONGOLD = (147, 117, 53)      # colour of the buttons
-HIGHLIGHT = (150, 120, 100, 20)  # colour of the highlight, not sure how to get alpha working but we won't bother
+BACKGROUND_GOLD = (124, 91, 51)   # currently unused
+BUTTON_GOLD = (147, 117, 53)      # colour of the buttons
+HIGHLIGHT = (150, 120, 100, 20)  # colour of the highlight, not sure how
+#  to get alpha working but we won't bother
 
 buttonNewGame = pygame.Rect(50, 600, 300, 150)
 buttonContinue = pygame.Rect(400, 600, 300, 150)
@@ -18,56 +20,72 @@ buttonSettings = pygame.Rect(50, 800, 300, 150)
 buttonQuit = pygame.Rect(400, 800, 300, 150)
 
 
-def drawmenu():  # Draws rectangles to represent the 'buttons'
-    pygame.draw.rect(DISPLAYSURFACE, BUTTONGOLD, buttonNewGame)
-    pygame.draw.rect(DISPLAYSURFACE, BUTTONGOLD, buttonContinue)
-    pygame.draw.rect(DISPLAYSURFACE, BUTTONGOLD, buttonSettings)
-    pygame.draw.rect(DISPLAYSURFACE, BUTTONGOLD, buttonQuit)
+def draw_menu():  # Draws rectangles to represent the 'buttons'
+    pygame.draw.rect(DISPLAY_SURFACE, BUTTON_GOLD, buttonNewGame)
+    pygame.draw.rect(DISPLAY_SURFACE, BUTTON_GOLD, buttonContinue)
+    pygame.draw.rect(DISPLAY_SURFACE, BUTTON_GOLD, buttonSettings)
+    pygame.draw.rect(DISPLAY_SURFACE, BUTTON_GOLD, buttonQuit)
 
 
-def checkbuttons(clickPos):  # Checks which 'button' was clicked, can assign functions to each separate button
-    if buttonNewGame.collidepoint(clickPos):
+def check_buttons(click_pos):
+    """
+    Checks which 'button' was clicked,
+    can assign functions to each separate button
+    Args:
+        click_pos -- position of the mouse click
+    """
+    if buttonNewGame.collidepoint(click_pos):
         print("Button clicked: New Game")
         return 'New_Game'
-    if buttonContinue.collidepoint(clickPos):
+    if buttonContinue.collidepoint(click_pos):
         print("Button clicked: Continue")
-        return 'Continue'
-    if buttonSettings.collidepoint(clickPos):
+        # return 'Continue'
+        pass
+    if buttonSettings.collidepoint(click_pos):
         print("Button clicked: Settings")
-        return 'Settings'
-    if buttonQuit.collidepoint(clickPos):
+        # return 'Settings'
+        pass
+    if buttonQuit.collidepoint(click_pos):
         print("Button clicked: Quit")
-        return 'Quit'
+        # return 'Quit'
+        pass
     return 'Main_Menu'
 
 
-def highlightbuttons(mx, my):  # Draws a highlight over a button when moused over
+def highlight_buttons(mx, my):  # Draws a highlight over a button on mouse-over
     if buttonNewGame.collidepoint(mx, my):
-        pygame.draw.rect(DISPLAYSURFACE, HIGHLIGHT, buttonNewGame)
+        pygame.draw.rect(DISPLAY_SURFACE, HIGHLIGHT, buttonNewGame)
     if buttonContinue.collidepoint(mx, my):
-        pygame.draw.rect(DISPLAYSURFACE, HIGHLIGHT, buttonContinue)
+        pygame.draw.rect(DISPLAY_SURFACE, HIGHLIGHT, buttonContinue)
     if buttonSettings.collidepoint(mx, my):
-        pygame.draw.rect(DISPLAYSURFACE, HIGHLIGHT, buttonSettings)
+        pygame.draw.rect(DISPLAY_SURFACE, HIGHLIGHT, buttonSettings)
     if buttonQuit.collidepoint(mx, my):
-        pygame.draw.rect(DISPLAYSURFACE, HIGHLIGHT, buttonQuit)
+        pygame.draw.rect(DISPLAY_SURFACE, HIGHLIGHT, buttonQuit)
 
 
 def menu_update():
     while True:
-        DISPLAYSURFACE.fill(BLACK)
-        drawmenu()
+        DISPLAY_SURFACE.fill(BLACK)
+        draw_menu()
 
-        mousex = mousey = 0
+        mouse_x = mouse_y = 0
 
         for event in pygame.event.get():
-            if event.type == QUIT or (event.type == KEYUP and event.key == K_ESCAPE):
+            if event.type == QUIT:
                 pygame.quit()
+                sys.exit()
+            elif event.type == KEYUP:
+                if event.key == K_ESCAPE:
+                    pygame.quit()
+                    sys.exit()
+            # stores most recent mouse movement in two variables
             elif event.type == MOUSEMOTION:
-                mousex, mousey = event.pos  # stores most recent mouse movement in two variables
+                mouse_x, mouse_y = event.pos
+            # check if a button was clicked on mouse click
             elif event.type == MOUSEBUTTONUP:
-                clickPos = pygame.mouse.get_pos()
-                return checkbuttons(clickPos)              # when the mouse button is clicked, we check if a button was clicked
+                click_pos = pygame.mouse.get_pos()
+                return check_buttons(click_pos)
 
-        highlightbuttons(mousex, mousey)
+        highlight_buttons(mouse_x, mouse_y)
         pygame.display.update()
         fpsClock.tick(FPS)
