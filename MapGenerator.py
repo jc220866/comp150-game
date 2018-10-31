@@ -13,7 +13,11 @@ screen = pygame.display.set_mode((windowWidth, windowHeight), 0, 32)
 pygame.display.set_caption('Map Generation')
 
 tilemap = ImageFiles.images['Tilemap'].convert_alpha()
+
 tile_path = './Resources/Visual/Tiles/'
+
+if not os.path.exists(tile_path):
+    os.makedirs(tile_path)
 
 # Number of tiles on the x and y axis
 tilemap_size_x = 9
