@@ -1,6 +1,6 @@
 import pygame
 import random
-from AudoFiles import *
+from AudioFiles import *
 
 
 def music_loop():
