@@ -22,8 +22,12 @@ images['Player'] = pygame.image.load(
     './Resources/Visual/Sprites/player.png'
     ).convert_alpha()
 
+images['Enemy'] = pygame.image.load(
+    './Resources/Visual/Sprites/enemy.png'
+    ).convert_alpha()
+
 images['Handle'] = pygame.image.load(
-    './Resources/Visual/Sprites/player.png'
+    './Resources/Visual/Items/handle.png'
     ).convert_alpha()
 
 images['Blade'] = pygame.image.load(
@@ -62,8 +66,8 @@ images['Rooms']['Tutorial'] = pygame.image.load(
 
 images['UI'] = dict()
 
-images['UI']['Menu_Button'] = pygame.image.load(
-    './Resources/Visual/UI/Menu_Button.png'
+images['UI']['Inventory_Background'] = pygame.image.load(
+    './Resources/Visual/UI/inv_background.png'
 ).convert_alpha()
 
 images['Enemies'] = [pygame.image.load(

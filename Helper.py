@@ -1,7 +1,7 @@
 import pygame
 
 RESOLUTION = (750, 1334)
-displaySurface = pygame.display.set_mode(RESOLUTION)
+DISPLAY_SURFACE = pygame.display.set_mode(RESOLUTION)
 # Colours - Not currently used
 darkBrown = (79, 51, 44)
 lightBrown = (107, 74, 55)

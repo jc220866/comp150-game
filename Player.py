@@ -7,7 +7,7 @@ import ImageFiles
 class Player(Entity.Entity):
 
     currentLane = 0  # 0: Middle, -1: Left, 1: Right
-    displaySurface = Helper.displaySurface
+    displaySurface = Helper.DISPLAY_SURFACE
     playerSurf = ImageFiles.images['Player']
     playerRect = playerSurf.get_rect()
     playerPos = [Helper.RESOLUTION[0] * 0.5 - playerSurf.get_width() * 0.5,
@@ -21,16 +21,25 @@ class Player(Entity.Entity):
         self.health = Entity.Entity.defaultHealth
 
     @staticmethod
-    def player_action(action, player):
+    def player_action(action, player, inv_is_open=False):
         if 'move' in action:
-            Player.player_move(action, player)
+            Player.player_move(action, player, inv_is_open)
         elif 'idle' == action:
-            pass
-        elif 'open_inv' == action:
             pass
 
     @staticmethod
-    def player_move(direction, player):  # needs four directions
+    def inventory_update(action, is_open=False):
+        if 'switch_inv' == action:
+            return not is_open
+        elif 'open_inv' == action:
+            return True
+        elif 'close_inv' == action:
+            return False
+        else:
+            return is_open
+
+    @staticmethod
+    def player_move(direction, player, inv_is_open=False):  # needs four directions
         """
         Used for moving player upon swipe input, in future
         will be used for moving from room to room also.
@@ -44,9 +53,11 @@ class Player(Entity.Entity):
             player.currentLane += 1
 
             while player.playerPos[0] < player_destination:
-                player.playerPos[0] += Helper.MOVE_SPEED  # needs a loop in the "Main" script?
+                player.playerPos[0] += Helper.MOVE_SPEED
                 Player.displaySurface.blit(ImageFiles.images['Background'], (0, 0))
-                Player.displaySurface.blit(player.playerSurf, (player.playerPos[0], player.playerPos[1]))
+                Player.displaySurface.blit(player.playerSurf, player.playerPos)
+                if inv_is_open:
+                    Player.displaySurface.blit(ImageFiles.images['UI']['Inventory_Background'], (0, 0))
                 pygame.display.flip()
 
         elif direction == 'move_left' and player.currentLane > -1:
@@ -56,7 +67,7 @@ class Player(Entity.Entity):
             while player.playerPos[0] > player_destination:
                 player.playerPos[0] -= Helper.MOVE_SPEED  # needs a loop in the "Main" script?
                 Player.displaySurface.blit(ImageFiles.images['Background'], (0, 0))
-                Player.displaySurface.blit(player.playerSurf, (player.playerPos[0], player.playerPos[1]))
-
+                Player.displaySurface.blit(player.playerSurf, player.playerPos)
+                if inv_is_open:
+                    Player.displaySurface.blit(ImageFiles.images['UI']['Inventory_Background'], (0, 0))
                 pygame.display.flip()
-
