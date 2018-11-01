@@ -14,8 +14,8 @@ class Player(pygame.sprite.Sprite):
                  + 600
                  ]  # (311.0, 202.8 for 750x1334 resolution)
     moveDistance = Helper.MOVE_DISTANCE
-    
-    inv_is_open = False
+    inventoryPosition = Helper.INVENTORY_POSITION
+    inventoryIsOpen = False
 
     @staticmethod
     def player_action(action, player):
@@ -27,11 +27,11 @@ class Player(pygame.sprite.Sprite):
     @staticmethod
     def inventory_update(action):
         if 'switch_inv' == action:
-            Player.inv_is_open = not Player.inv_is_open
+            Player.inventoryIsOpen = not Player.inventoryIsOpen
         elif 'open_inv' == action:
-            Player.inv_is_open = True
+            Player.inventoryIsOpen = True
         elif 'close_inv' == action:
-            Player.inv_is_open = False
+            Player.inventoryIsOpen = False
 
     @staticmethod
     def player_move(direction, player):  # needs four directions
@@ -49,10 +49,17 @@ class Player(pygame.sprite.Sprite):
 
             while player.playerPos[0] < player_destination:
                 player.playerPos[0] += Helper.MOVE_SPEED
-                Player.displaySurface.blit(ImageFiles.images['Background'], (0, 0))
+                Player.displaySurface.blit(
+                    ImageFiles.images['Background'], (0, 0)
+                )
+
                 Player.displaySurface.blit(player.playerSurf, player.playerPos)
-                if Player.inv_is_open:
-                    Player.displaySurface.blit(ImageFiles.images['UI']['Inventory_Background'], (0, 0))
+                if Player.inventoryIsOpen:
+                    Player.displaySurface.blit(
+                        ImageFiles.images['UI']['Inventory_Background'],
+                        Player.inventoryPosition
+                    )
+
                 pygame.display.flip()
 
         elif direction == 'move_left' and player.currentLane > -1:
@@ -60,9 +67,16 @@ class Player(pygame.sprite.Sprite):
             player.currentLane -= 1
 
             while player.playerPos[0] > player_destination:
-                player.playerPos[0] -= Helper.MOVE_SPEED  # needs a loop in the "Main" script?
-                Player.displaySurface.blit(ImageFiles.images['Background'], (0, 0))
+                player.playerPos[0] -= Helper.MOVE_SPEED
+                Player.displaySurface.blit(
+                    ImageFiles.images['Background'], (0, 0)
+                )
+
                 Player.displaySurface.blit(player.playerSurf, player.playerPos)
-                if Player.inv_is_open:
-                    Player.displaySurface.blit(ImageFiles.images['UI']['Inventory_Background'], (0, 0))
+                if Player.inventoryIsOpen:
+                    Player.displaySurface.blit(
+                        ImageFiles.images['UI']['Inventory_Background'],
+                        Player.inventoryPosition
+                    )
+
                 pygame.display.flip()
