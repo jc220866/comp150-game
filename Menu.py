@@ -11,7 +11,7 @@ pygame.display.set_caption('Sekai Saviour')
 BLACK = (0, 0, 0)                # currently used for the background
 BACKGROUND_GOLD = (124, 91, 51)   # currently unused
 BUTTON_GOLD = (147, 117, 53)      # colour of the buttons
-HIGHLIGHT = (150, 120, 100, 20)  # colour of the highlight, not sure how to get alpha working
+HIGHLIGHT = (150, 120, 100, 20)  # colour of the highlight
 
 buttons = dict(
     buttonNewGame=pygame.Rect(50, 600, 300, 150),
