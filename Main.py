@@ -23,11 +23,9 @@ DISPLAY_SURFACE.fill(Helper.darkBrown)
 player = Player.Player()
 MapGenerator.run_separator()
 
-
 game_state = 'Main_Menu'
-
 is_paused = False
-
+running = True
 while running:
 
     while game_state == 'Main_Menu':
@@ -44,6 +42,12 @@ while running:
                     if event.key == K_ESCAPE:
                         game_state = 'Main_Menu'
                         break
+                    elif event.key == K_j\
+                            or event.key == K_k\
+                            or event.key == K_l:
+                        enemy_1 = Entity.Enemy()
+                        enemy_1.generate_enemy(event.key)
+                        Entity.Enemy.numberOfOnscreenEnemies += 1
                     elif event.key == K_a:
                         player.player_action('move_left', player)
                     elif event.key == K_d:
@@ -75,6 +79,15 @@ while running:
 
             DISPLAY_SURFACE.blit(ImageFiles.images['Background'], (0, 0))
             DISPLAY_SURFACE.blit(player.playerSurf, player.playerPos)
+            if Entity.Enemy.enemyVisibility['left']:
+                DISPLAY_SURFACE.blit(enemy_1.sprite,
+                                     (150-enemy_1.sprite.get_width()*0.5, 150))
+            if Entity.Enemy.enemyVisibility['centre']:
+                DISPLAY_SURFACE.blit(enemy_1.sprite,
+                                     (375-enemy_1.sprite.get_width()*0.5, 150))
+            if Entity.Enemy.enemyVisibility['right']:
+                DISPLAY_SURFACE.blit(enemy_1.sprite,
+                                     (600-enemy_1.sprite.get_width()*0.5, 150))
 
             if Player.Player.inventoryIsOpen:
                 DISPLAY_SURFACE.blit(

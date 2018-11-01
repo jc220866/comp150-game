@@ -30,7 +30,7 @@ def read_mouse_movements(mouse_position, player):
                 elif input_distance_h <= -swipeDistance:
                     input_command = 'move_left'
                 elif input_distance_v >= swipeDistance:
-                    input_command = 'close_inv?'
+                    input_command = 'close_inv'
                 elif input_distance_v <= -swipeDistance:
                     input_command = 'open_inv'
                 elif abs(input_distance_h) < swipeDistance\
