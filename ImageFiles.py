@@ -65,3 +65,7 @@ images['UI'] = dict()
 images['UI']['Menu_Button'] = pygame.image.load(
     './Resources/Visual/UI/Menu_Button.png'
 ).convert_alpha()
+
+images['Enemies'] = [pygame.image.load(
+    './Resources/Visual/Sprites/enemy.png'
+)]

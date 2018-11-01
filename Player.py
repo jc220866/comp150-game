@@ -4,7 +4,8 @@ import pygame
 import ImageFiles
 
 
-class Player(pygame.sprite.Sprite):
+class Player(Entity.Entity):
+
     currentLane = 0  # 0: Middle, -1: Left, 1: Right
     displaySurface = Helper.displaySurface
     playerSurf = ImageFiles.images['Player']
@@ -14,6 +15,10 @@ class Player(pygame.sprite.Sprite):
                  + 600
                  ]  # (311.0, 202.8 for 750x1334 resolution)
     moveDistance = Helper.MOVE_DISTANCE
+
+    def __init__(self):
+        Entity.Entity.__init__(self)
+        self.health = Entity.Entity.defaultHealth
 
     @staticmethod
     def player_action(action, player):

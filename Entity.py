@@ -1,15 +1,17 @@
 import pygame
+import random
 import ImageFiles
 import Helper
 # Classes used by Entity type Objects
 
 
 pygame.init()
-
+'''
 windowHeight = 150
 windowWidth = 450
 
 screen = pygame.display.set_mode((windowWidth, windowHeight), 0, 32)
+'''
 
 
 class Entity:
@@ -17,6 +19,7 @@ class Entity:
     entity_index = 0  # Declaration of static Index
     # Declaration of static alignment for all Entities
     entity_alignment = ('Aggressive', 'Passive', 'Friendly')
+    defaultHealth = 100
 
     def __init__(self):
         # subname is a unique identifier that uses the index
@@ -40,14 +43,14 @@ class Entity:
 
 class Enemy(Entity):
 
-    @staticmethod
-    def generate_elemental_resists(element):
-        elemental_resists = []
-
-        return elemental_resists
-
     def __init__(self):
         Entity.__init__(self)
+        self.health = Entity.defaultHealth  # * (enemyLevel * 0.1)
+        self.sprite = ImageFiles.images['Enemies'][0]  # [random.randint(0, len(ImageFiles.images) - 1)]
+
+    @staticmethod
+    def generate_enemy():
+        Helper.displaySurface.blit(Enemy.sprite, (200, 200))
 
 
 class EnemyBoss(Enemy):

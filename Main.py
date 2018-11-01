@@ -1,5 +1,7 @@
 import pygame
 import sys
+
+import Entity
 import ImageFiles
 import Helper
 import Menu
@@ -21,17 +23,18 @@ displaySurface.fill(Helper.darkBrown)
 player = Player.Player()
 MapGenerator.run_separator()
 
-# game loop
-running = True
-
 
 game_state = 'Main_Menu'
 is_paused = False
 
+running = True
 while running:
 
     while game_state == 'Main_Menu' and running:
         game_state = Menu.menu_update()
+
+    enemy1 = Entity.Enemy()
+    enemy1.generate_enemy()
 
     while game_state == 'New_Game' and running:
         # game loop event handling section
