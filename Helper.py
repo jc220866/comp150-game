@@ -7,7 +7,7 @@ SWIPE_DISTANCE = 90  # distance moved for input to be registered as a swipe
 MOVE_DISTANCE = 160  # distance the onscreen character moves
 MOVE_SPEED = 5  # distance for character move steps
 
-INVENTORY_POSITION = (15, 900)
+INVENTORY_POSITION = (15, 970)
 # Colours - Not currently used
 darkBrown = (79, 51, 44)
 lightBrown = (107, 74, 55)

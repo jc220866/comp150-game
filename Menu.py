@@ -1,11 +1,12 @@
 import pygame
 import sys
+import Helper
 from pygame.locals import *
 
 pygame.init()
 FPS = 60
-fpsClock = pygame.time.Clock()
-DISPLAY_SURFACE = pygame.display.set_mode((750, 1000), 0, 32)
+FPS_CLOCK = pygame.time.Clock()
+DISPLAY_SURFACE = Helper.DISPLAY_SURFACE
 pygame.display.set_caption('Sekai Saviour')
 
 BLACK = (0, 0, 0)                # currently used for the background
@@ -14,10 +15,10 @@ BUTTON_GOLD = (147, 117, 53)      # colour of the buttons
 HIGHLIGHT = (150, 120, 100, 20)  # colour of the highlight
 
 buttons = dict(
-    buttonNewGame=pygame.Rect(50, 600, 300, 150),
-    buttonContinue=pygame.Rect(400, 600, 300, 150),
-    buttonSettings=pygame.Rect(50, 800, 300, 150),
-    buttonQuit=pygame.Rect(400, 800, 300, 150),
+    buttonNewGame=pygame.Rect(50, 934, 300, 150),
+    buttonContinue=pygame.Rect(400, 934, 300, 150),
+    buttonSettings=pygame.Rect(50, 1134, 300, 150),
+    buttonQuit=pygame.Rect(400, 1134, 300, 150),
     optionsBackground=pygame.Rect(25, 375, 700, 600),
     optionsExit=pygame.Rect(50, 900, 100, 50)
     )
@@ -93,4 +94,4 @@ def menu_update():
 
         highlight_buttons(mouse_x, mouse_y)
         pygame.display.update()
-        fpsClock.tick(FPS)
+        FPS_CLOCK.tick(FPS)
