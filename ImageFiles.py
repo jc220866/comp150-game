@@ -67,18 +67,21 @@ images['Potion_Body'] = pygame.image.load(
     './Resources/Visual/Items/body.png'
     ).convert_alpha()
 
-images['Rooms'] = dict()
+images['Rooms'] = dict(
+            Tutorial=pygame.image.load(
+                './Resources/Visual/Items/body.png').convert_alpha()
+                )
 
 images['Rooms']['Tutorial'] = pygame.image.load(
     './Resources/Visual/Items/body.png'
-).convert_alpha()
+    ).convert_alpha()
 
-images['UI'] = dict()
+images['UI'] = dict(
+        Inventory_Background=pygame.image.load(
+            './Resources/Visual/UI/inv_background.png').convert_alpha()
+            )
 
-images['UI']['Inventory_Background'] = pygame.image.load(
-    './Resources/Visual/UI/inv_background.png'
-).convert_alpha()
-
-images['Enemies'] = [pygame.image.load(
-    './Resources/Visual/Sprites/enemy.png'
-)]
+images['Enemies'] = [
+    pygame.image.load(
+        './Resources/Visual/Sprites/enemy.png'
+        )]

@@ -86,6 +86,9 @@ def menu_update():
                 if event.key == K_ESCAPE:
                     pygame.quit()
                     sys.exit()
+                # just because I'm fed up of clicking (sorry)
+                elif event.key == K_f:
+                    return 'New_Game'
 
             # check if a button was clicked on mouse click
             elif event.type == MOUSEBUTTONUP:

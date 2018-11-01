@@ -38,19 +38,37 @@ class Entity:
         # setting alignment to passive as a default
         alignment = Entity.entity_alignment[1]
 
-        # To do: define states, as to specify what images and animations to incorporate into lists
+        # To do: define states, as to specify what
+        # images and animations to incorporate into lists
 
 
 class Enemy(Entity):
+
+    numberOfOnscreenEnemies = 0
+    enemyVisibility = dict(
+        left=False,
+        centre=False,
+        right=False
+        )
 
     def __init__(self):
         Entity.__init__(self)
         self.health = Entity.defaultHealth  # * (enemyLevel * 0.1)
         self.sprite = ImageFiles.images['Enemies'][0]  # [random.randint(0, len(ImageFiles.images) - 1)]
 
-    @staticmethod
-    def generate_enemy():
-        Helper.displaySurface.blit(Enemy.sprite, (200, 200))
+    def generate_enemy(self, position):
+        if position == 106:
+            Enemy.enemyVisibility['left'] = True
+        elif position == 107:
+            Enemy.enemyVisibility['centre'] = True
+        elif position == 108:
+            Enemy.enemyVisibility['right'] = True
+
+        self.sprite = ImageFiles.images['Enemies'][0]  # [random.randint(0, len(ImageFiles.images) - 1)]
+
+    def is_hit(self, damage):
+        self.health = self.health - damage
+        # play_sound(enemy_hit)
 
 
 class EnemyBoss(Enemy):

@@ -25,7 +25,7 @@ class RoomTutorial(Room):
         # Use this in the regular enemy and boss rooms
         self.lanes = dict()
         self.lanes['left'] = Lane(150, 150, 'left')
-        self.lanes['center'] = Lane(375, 150, 'center')
+        self.lanes['centre'] = Lane(375, 150, 'centre')
         self.lanes['right'] = Lane(600, 150, 'right')
 
     @staticmethod
@@ -33,7 +33,7 @@ class RoomTutorial(Room):
         room = RoomTutorial()
 
         if enemies > 0:
-            room.lanes['center'].occupy_lane(Entity.Enemy)
+            room.lanes['centre'].occupy_lane(Entity.Enemy)
             enemies -= 1
 
         if enemies > 0:
