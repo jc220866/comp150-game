@@ -35,13 +35,17 @@ while running:
 
     while game_state == 'New_Game' and running:
         # game loop event handling section
-        if is_paused == False:
+        if not is_paused:
             for event in pygame.event.get():
                 if event.type == QUIT:
                     running = False
                 elif event.type == KEYUP:
                     if event.key == K_ESCAPE:
                         running = False
+                    elif event.key == K_a:
+                        player.player_action('move_left', player)
+                    elif event.key == K_d:
+                        player.player_action('move_right', player)
                 elif event.type == MOUSEBUTTONDOWN:  # start to read swipe input
                     player.player_action(Inputs.read_mouse_movements(event.pos, player), player)
                 else:
