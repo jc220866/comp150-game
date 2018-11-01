@@ -24,7 +24,6 @@ MapGenerator.run_separator()
 # game loop
 running = True
 
-
 game_state = 'Main_Menu'
 is_paused = False
 
@@ -60,6 +59,9 @@ while running:
         else:
             print('GAME IS PAUSED')
             pygame.time.delay(300)
+
+    if game_state == 'Quit':
+        running = False
 
     # cap fps
     clock.tick(refreshRate)
