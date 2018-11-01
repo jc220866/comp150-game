@@ -78,3 +78,7 @@ images['UI'] = dict()
 images['UI']['Inventory_Background'] = pygame.image.load(
     './Resources/Visual/UI/inv_background.png'
 ).convert_alpha()
+
+images['Enemies'] = [pygame.image.load(
+    './Resources/Visual/Sprites/enemy.png'
+)]

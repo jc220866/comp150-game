@@ -4,7 +4,8 @@ import pygame
 import ImageFiles
 
 
-class Player(pygame.sprite.Sprite):
+class Player(Entity.Entity):
+
     currentLane = 0  # 0: Middle, -1: Left, 1: Right
     displaySurface = Helper.DISPLAY_SURFACE
     playerSurf = ImageFiles.images['Player']
@@ -16,6 +17,10 @@ class Player(pygame.sprite.Sprite):
     moveDistance = Helper.MOVE_DISTANCE
     inventoryPosition = Helper.INVENTORY_POSITION
     inventoryIsOpen = False
+
+    def __init__(self):
+        Entity.Entity.__init__(self)
+        self.health = Entity.Entity.defaultHealth
 
     @staticmethod
     def player_action(action, player):

@@ -1,5 +1,7 @@
 import pygame
 import sys
+
+import Entity
 import ImageFiles
 import Helper
 import Menu
@@ -21,8 +23,6 @@ DISPLAY_SURFACE.fill(Helper.darkBrown)
 player = Player.Player()
 MapGenerator.run_separator()
 
-# game loop
-running = True
 
 game_state = 'Main_Menu'
 
