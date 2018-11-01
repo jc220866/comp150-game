@@ -15,31 +15,31 @@ class Player(Entity.Entity):
                  + 600
                  ]  # (311.0, 202.8 for 750x1334 resolution)
     moveDistance = Helper.MOVE_DISTANCE
+    
+    inv_is_open = False
 
     def __init__(self):
         Entity.Entity.__init__(self)
         self.health = Entity.Entity.defaultHealth
 
     @staticmethod
-    def player_action(action, player, inv_is_open=False):
+    def player_action(action, player):
         if 'move' in action:
-            Player.player_move(action, player, inv_is_open)
+            Player.player_move(action, player)
         elif 'idle' == action:
             pass
 
     @staticmethod
-    def inventory_update(action, is_open=False):
+    def inventory_update(action):
         if 'switch_inv' == action:
-            return not is_open
+            Player.inv_is_open = not Player.inv_is_open
         elif 'open_inv' == action:
-            return True
+            Player.inv_is_open = True
         elif 'close_inv' == action:
-            return False
-        else:
-            return is_open
+            Player.inv_is_open = False
 
     @staticmethod
-    def player_move(direction, player, inv_is_open=False):  # needs four directions
+    def player_move(direction, player):  # needs four directions
         """
         Used for moving player upon swipe input, in future
         will be used for moving from room to room also.
@@ -56,7 +56,7 @@ class Player(Entity.Entity):
                 player.playerPos[0] += Helper.MOVE_SPEED
                 Player.displaySurface.blit(ImageFiles.images['Background'], (0, 0))
                 Player.displaySurface.blit(player.playerSurf, player.playerPos)
-                if inv_is_open:
+                if Player.inv_is_open:
                     Player.displaySurface.blit(ImageFiles.images['UI']['Inventory_Background'], (0, 0))
                 pygame.display.flip()
 
@@ -68,6 +68,6 @@ class Player(Entity.Entity):
                 player.playerPos[0] -= Helper.MOVE_SPEED  # needs a loop in the "Main" script?
                 Player.displaySurface.blit(ImageFiles.images['Background'], (0, 0))
                 Player.displaySurface.blit(player.playerSurf, player.playerPos)
-                if inv_is_open:
+                if Player.inv_is_open:
                     Player.displaySurface.blit(ImageFiles.images['UI']['Inventory_Background'], (0, 0))
                 pygame.display.flip()

@@ -22,6 +22,15 @@ images['Player'] = pygame.image.load(
     './Resources/Visual/Sprites/player.png'
     ).convert_alpha()
 
+images['Player_Attack'] = pygame.image.load(
+    './Resources/Visual/Sprites/player_attack.png'
+    ).convert_alpha()
+
+images['Enemy_Attack'] = pygame.image.load(
+    './Resources/Visual/Sprites/enemy_attack.png'
+    ).convert_alpha()
+
+
 images['Enemy'] = pygame.image.load(
     './Resources/Visual/Sprites/enemy.png'
     ).convert_alpha()

@@ -29,7 +29,6 @@ game_state = 'Main_Menu'
 
 is_paused = False
 
-inv_is_open = False
 while running:
 
     while game_state == 'Main_Menu':
@@ -56,15 +55,15 @@ while running:
                         player.player_action('move_right', player)
                     elif event.key == K_i:
                         # DISPLAY_SURFACE.blit(ImageFiles.images['UI']['Inventory_Background'], (0, 0))
-                        inv_is_open = player.inventory_update('switch_inv', inv_is_open)
+                        player.inv_is_open = player.inventory_update('switch_inv')
                         print('toggling inventory')
-                elif event.type == MOUSEBUTTONDOWN and not inv_is_open:  # start to read swipe input
+                elif event.type == MOUSEBUTTONDOWN and not Player.Player.inv_is_open:  # start to read swipe input
                     action = Inputs.read_mouse_movements(event.pos, player)
-                    player.player_action(action, player, inv_is_open)
-                    inv_is_open = player.inventory_update(action)
-                elif event.type == MOUSEBUTTONDOWN and inv_is_open:
+                    player.player_action(action, player)
+                    player.inv_is_open = player.inventory_update(action)
+                elif event.type == MOUSEBUTTONDOWN and Player.Player.inv_is_open:
                     action = Inputs.read_mouse_movements(event.pos, player)
-                    inv_is_open = player.inventory_update(action, inv_is_open)
+                    player.inv_is_open = player.inventory_update(action)
                 else:
                     player.player_action('idle', player)
 
@@ -75,7 +74,7 @@ while running:
             DISPLAY_SURFACE.blit(ImageFiles.images['Background'], (0, 0))
             DISPLAY_SURFACE.blit(player.playerSurf, player.playerPos)
 
-            if inv_is_open:
+            if Player.Player.inv_is_open:
                 DISPLAY_SURFACE.blit(ImageFiles.images['UI']['Inventory_Background'], (0, 0))
 
             pygame.display.flip()
