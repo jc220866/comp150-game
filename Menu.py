@@ -18,8 +18,8 @@ buttons = dict(
     buttonContinue=pygame.Rect(400, 600, 300, 150),
     buttonSettings=pygame.Rect(50, 800, 300, 150),
     buttonQuit=pygame.Rect(400, 800, 300, 150),
-    menuSettingsExit=pygame.Rect(25, 375, 700, 600),
-    menuExit=pygame.Rect(50, 900, 100, 50)
+    optionsBackground=pygame.Rect(25, 375, 700, 600),
+    optionsExit=pygame.Rect(50, 900, 100, 50)
     )
 
 
@@ -81,7 +81,7 @@ def menu_update():
                 pygame.quit()
                 sys.exit()
 
-            elif event.type == KEYUP:
+            elif event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
                     pygame.quit()
                     sys.exit()

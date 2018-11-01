@@ -39,5 +39,4 @@ def read_mouse_movements(mouse_position, player):
                     input_command = 'attack'
 
                 # player.player_action(input_command)
-
                 return input_command
