@@ -1,6 +1,7 @@
 import pygame
 import ImageFiles
 import Helper
+import Player
 
 pygame.init()
 DISPLAY_SURFACE = Helper.DISPLAY_SURFACE
@@ -8,29 +9,32 @@ DISPLAY_SURFACE = Helper.DISPLAY_SURFACE
 attackSprites = []
 
 
-def enemy_attack(lane):
-
-    attackSprites.append(enemy_attack_sprite(lane))
-    pass
-
-
 class enemy_attack_sprite:
 
     projectile_speed = 10  # Put in Helper at a later point
 
-    def __init__(self, lane):
+    def __init__(self, lane, parent_enemy):
         self.sprite = ImageFiles.images['Enemy_Attack']
         self.rect = self.sprite.get_rect()
         self.lane = lane
+        self.damage = parent_enemy.damage
 
-        self.pos_y = -10
+        print('this will deal ' + str(self.damage) + ' to the player with ' + str(Player.Player.health) + 'hp')
 
-        if lane == 'middle':
-            self.pos_x = Helper.LANES['middle'][0][0] - int(self.rect.width/2)
+        self.pos_y = Helper.LANES[lane][0][1] - int(self.rect.height/2)
+        self.pos_x = Helper.LANES[lane][0][0] - int(self.rect.width/2)
 
-    def update_position(self):
+        attackSprites.append(self)
+
+    def update(self):
 
         collision_with_player = False
+
+       #if self.rect.colliderect(Player.Player.playerRect):
+            #collision_with_player = True
+            #Player.Player.is_hit(self.damage)
+
         if self.pos_y < 1334 and collision_with_player is False:
             self.pos_y += enemy_attack_sprite.projectile_speed
-        # add case for colliding with player
+        #elif collision_with_player is True:
+        #    del self

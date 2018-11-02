@@ -63,6 +63,8 @@ class Enemy(Entity):
         lane_is_occupied = True
         self.lane_key = 'middle'
 
+        self.damage = 10
+
         while lane_is_occupied:
             self.lane_key = random.choice(list(Helper.LANES))
             lane_is_occupied = Helper.LANES[self.lane_key][1]
@@ -83,8 +85,15 @@ class Enemy(Entity):
         attack = random.randint(1, 100)
         if attack <= self.chance_to_attack and pygame.time.get_ticks() - self.time_since_attack > self.attack_cooldown:
             print('ATTACK on lane ' + self.lane_key)
-            EnemyAttacks.enemy_attack_sprite(self.lane_key)
+            EnemyAttacks.enemy_attack_sprite(self.lane_key, self)
 
+    def __del__(self):
+        try:
+            Helper.LANES[self.lane_key][1] = False
+            Enemy.numberOfOnscreenEnemies -= 1
+            del self
+        except AttributeError:
+            print('Thank you for playing Wing Commander!')
 
 
 

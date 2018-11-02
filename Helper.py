@@ -19,7 +19,7 @@ SWIPE_DISTANCE = 90
 MOVE_DISTANCE = LANES['middle'][0][0] - LANES['left'][0][0]
 
 # distance for character move steps
-MOVE_SPEED = 5
+MOVE_SPEED = 10
 
 INVENTORY_POSITION = (15, 970)
 

@@ -20,6 +20,7 @@ def read_mouse_movements(mouse_position, player):
         for event in pygame.event.get():
 
             if event.type == MOUSEBUTTONUP:
+
                 mouse_up_x, mouse_up_y = event.pos
                 input_distance_h = mouse_up_x - mouse_down_x
                 input_distance_v = mouse_up_y - mouse_down_y

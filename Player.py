@@ -19,13 +19,14 @@ class Player(Entity.Entity):
                  ]  # (311.0, 202.8 for 750x1334 resolution)
     moveDistance = Helper.MOVE_DISTANCE
     inventoryPosition = Helper.INVENTORY_POSITION
+    health = 1
     inventoryIsOpen = False
 
     player_destination = 0
 
     def __init__(self):
         Entity.Entity.__init__(self)
-        self.health = Entity.Entity.defaultHealth
+        Player.health = Entity.Entity.defaultHealth
 
     @staticmethod
     def player_action(player, action):
@@ -82,3 +83,14 @@ class Player(Entity.Entity):
                 player.direction = ''
                 player.move_direction = ''
                 player.is_moving = False
+
+    @staticmethod
+    def is_hit(damage):
+        print('it is a hit')
+        Player.health -= damage
+        if Player.health <= 0:
+            Player.die()
+
+    @staticmethod
+    def die():
+        print('You\'s ded bruh')
