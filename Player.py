@@ -28,9 +28,11 @@ class Player(Entity.Entity):
         self.health = Entity.Entity.defaultHealth
 
     @staticmethod
-    def player_action(action, player):
-        if 'move' in action:
+    def player_action(player, action):
+        if 'move' in action and not player.inventoryIsOpen:
             Player.player_move(action, player)
+        elif 'inv' in action:
+            Player.inventory_update(action)
         elif 'idle' == action:
             pass
 
@@ -54,22 +56,29 @@ class Player(Entity.Entity):
             player -- this player class
         """
         if not player.is_moving:
-
-
             if direction == 'move_right' and player.currentLane < 1:
                 player.currentLane += 1
                 player.move_direction = direction
                 player.player_destination = player.playerPos[0] + player.moveDistance
-            elif player.currentLane > -1:
+                player.is_moving = True
+            elif direction == 'move_left' and player.currentLane > -1:
                 player.currentLane -= 1
-                player.move_direction = direction
+                player.move_direction = direction   # See about moving out
                 player.player_destination = player.playerPos[0] - player.moveDistance
-
-            player.is_moving = True
+                player.is_moving = True
 
         if player.is_moving and player.move_direction == 'move_right':
-            if player.playerPos[0] < player.player_destination and player.inventoryIsOpen == False:
+            if player.playerPos[0] < player.player_destination and not player.inventoryIsOpen:
                 player.playerPos[0] += Helper.MOVE_SPEED
             else:
                 player.direction = ''
+                player.move_direction = ''  # see about putting in function
+                player.is_moving = False
+
+        if player.is_moving and player.move_direction == 'move_left':
+            if player.playerPos[0] > player.player_destination and not player.inventoryIsOpen:
+                player.playerPos[0] -= Helper.MOVE_SPEED
+            else:
+                player.direction = ''
                 player.move_direction = ''
+                player.is_moving = False

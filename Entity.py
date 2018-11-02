@@ -24,20 +24,20 @@ class Entity:
 
     def __init__(self):
         # subname is a unique identifier that uses the index
-        subname = 'Entity' + str(Entity.entity_index)
+        self.subname = 'Entity' + str(Entity.entity_index)
         name = 'Placeholder name'
         # Importing index into the Entity-specific variable
-        index = Entity.entity_index
+        self.index = Entity.entity_index
 
         # Incrementing the index of all entities
         Entity.entity_index += 1
 
         # defining where the entity is encountered (by default, nowhere)
-        on_encounter = False
-        on_battle = False
+        self.on_encounter = False
+        self.on_battle = False
 
         # setting alignment to passive as a default
-        alignment = Entity.entity_alignment[1]
+        self.alignment = Entity.entity_alignment[1]
 
         # To do: define states, as to specify what
         # images and animations to incorporate into lists
@@ -46,33 +46,27 @@ class Entity:
 class Enemy(Entity):
 
     numberOfOnscreenEnemies = 0
-    enemyVisibility = dict(
-        left=False,
-        centre=False,
-        right=False
-        )
 
     def __init__(self):
         Entity.__init__(self)
+        self.on_battle = True
+        self.alignment = Entity.entity_alignment[0]
         self.health = Entity.defaultHealth  # * (enemyLevel * 0.1)
-        self.sprite = ImageFiles.images['Enemies'][0]  # [random.randint(0, len(ImageFiles.images) - 1)]
-        self.pos = [0, 0]
-        enemy_list.append(self)
+        self.sprite = ImageFiles.images['Enemy']  # [random.randint(0, len(ImageFiles.images) - 1)]
 
-    def generate_enemy(self, position):  # currently debug only code
-        """
-        Debug code for rendering enemy
-        :param position: Keycode for j, k, or l
-        :return:
-        """
-        if position == 106:
-            Enemy.enemyVisibility['left'] = True
-        elif position == 107:
-            Enemy.enemyVisibility['centre'] = True
-        elif position == 108:
-            Enemy.enemyVisibility['right'] = True
+        lane_is_occupied = True
+        lane_key = 'middle'
 
-        self.sprite = ImageFiles.images['Enemies'][0]  # [random.randint(0, len(ImageFiles.images) - 1)]
+        while lane_is_occupied:
+            lane_key = random.choice(list(Helper.LANES))
+            lane_is_occupied = Helper.LANES[lane_key][1]
+
+        Helper.LANES[lane_key][1] = True
+        self.pos = [
+                    Helper.LANES[lane_key][0][0] - int(self.sprite.get_width() / 2),
+                    Helper.LANES[lane_key][0][1] - int(self.sprite.get_height() / 2)
+                    ]
+        Enemy.numberOfOnscreenEnemies += 1
 
     def is_hit(self, damage):
         self.health = self.health - damage

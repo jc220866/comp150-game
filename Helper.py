@@ -56,3 +56,11 @@ room_encounter_type = (
                        'a villager in need',
                        'rubble on the road'
                        )
+
+# Entity variables:
+
+LANES = dict(
+    left=[(150, 375), False],
+    middle=[(375, 375), False],
+    right=[(600, 375), False]
+)
