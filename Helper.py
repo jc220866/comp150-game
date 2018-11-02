@@ -1,5 +1,6 @@
 import pygame
 
+REFRESH_RATE = 100
 RESOLUTION = (750, 1334)
 DISPLAY_SURFACE = pygame.display.set_mode(RESOLUTION)
 

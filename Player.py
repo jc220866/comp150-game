@@ -6,6 +6,9 @@ import ImageFiles
 
 class Player(Entity.Entity):
 
+    is_moving = False
+    move_direction = ''
+
     currentLane = 0  # 0: Middle, -1: Left, 1: Right
     displaySurface = Helper.DISPLAY_SURFACE
     playerSurf = ImageFiles.images['Player']
@@ -17,6 +20,8 @@ class Player(Entity.Entity):
     moveDistance = Helper.MOVE_DISTANCE
     inventoryPosition = Helper.INVENTORY_POSITION
     inventoryIsOpen = False
+
+    player_destination = 0
 
     def __init__(self):
         Entity.Entity.__init__(self)
@@ -48,40 +53,23 @@ class Player(Entity.Entity):
             direction -- string of the direction to move
             player -- this player class
         """
-        if direction == 'move_right' and player.currentLane < 1:
-            player_destination = player.playerPos[0] + player.moveDistance
-            player.currentLane += 1
+        if not player.is_moving:
 
-            while player.playerPos[0] < player_destination:
+
+            if direction == 'move_right' and player.currentLane < 1:
+                player.currentLane += 1
+                player.move_direction = direction
+                player.player_destination = player.playerPos[0] + player.moveDistance
+            elif player.currentLane > -1:
+                player.currentLane -= 1
+                player.move_direction = direction
+                player.player_destination = player.playerPos[0] - player.moveDistance
+
+            player.is_moving = True
+
+        if player.is_moving and player.move_direction == 'move_right':
+            if player.playerPos[0] < player.player_destination and player.inventoryIsOpen == False:
                 player.playerPos[0] += Helper.MOVE_SPEED
-                Player.displaySurface.blit(
-                    ImageFiles.images['Background'], (0, 0)
-                )
-
-                Player.displaySurface.blit(player.playerSurf, player.playerPos)
-                if Player.inventoryIsOpen:
-                    Player.displaySurface.blit(
-                        ImageFiles.images['UI']['Inventory_Background'],
-                        Player.inventoryPosition
-                    )
-
-                pygame.display.flip()
-
-        elif direction == 'move_left' and player.currentLane > -1:
-            player_destination = player.playerPos[0] - player.moveDistance
-            player.currentLane -= 1
-
-            while player.playerPos[0] > player_destination:
-                player.playerPos[0] -= Helper.MOVE_SPEED
-                Player.displaySurface.blit(
-                    ImageFiles.images['Background'], (0, 0)
-                )
-
-                Player.displaySurface.blit(player.playerSurf, player.playerPos)
-                if Player.inventoryIsOpen:
-                    Player.displaySurface.blit(
-                        ImageFiles.images['UI']['Inventory_Background'],
-                        Player.inventoryPosition
-                    )
-
-                pygame.display.flip()
+            else:
+                player.direction = ''
+                player.move_direction = ''

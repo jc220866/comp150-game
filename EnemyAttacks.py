@@ -31,5 +31,6 @@ class enemy_attack_sprite:
     def update_position(self):
 
         collision_with_player = False
-        while self.pos_y < 1334 and collision_with_player is False:
+        if self.pos_y < 1334 and collision_with_player is False:
             self.pos_y += enemy_attack_sprite.projectile_speed
+        # add case for colliding with player
