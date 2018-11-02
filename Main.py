@@ -1,6 +1,6 @@
 import pygame
 import sys
-
+import Renderer
 import Entity
 import ImageFiles
 import Helper
@@ -14,14 +14,15 @@ pygame.init()
 
 
 # variables
-refreshRate = 60
 
+REFRESH_RATE = Helper
 DISPLAY_SURFACE = Helper.DISPLAY_SURFACE
 FPS_CLOCK = pygame.time.Clock()
 pygame.display.set_caption('Sekai Saviour')
 DISPLAY_SURFACE.fill(Helper.darkBrown)
 player = Player.Player()
 MapGenerator.run_separator()
+
 
 game_state = 'Main_Menu'
 is_paused = False
@@ -76,26 +77,8 @@ while running:
             # game loop action section
 
             # game loop display section
+            Renderer.renderer()
 
-            DISPLAY_SURFACE.blit(ImageFiles.images['Background'], (0, 0))
-            DISPLAY_SURFACE.blit(player.playerSurf, player.playerPos)
-            if Entity.Enemy.enemyVisibility['left']:
-                DISPLAY_SURFACE.blit(enemy_1.sprite,
-                                     (150-enemy_1.sprite.get_width()*0.5, 150))
-            if Entity.Enemy.enemyVisibility['centre']:
-                DISPLAY_SURFACE.blit(enemy_1.sprite,
-                                     (375-enemy_1.sprite.get_width()*0.5, 150))
-            if Entity.Enemy.enemyVisibility['right']:
-                DISPLAY_SURFACE.blit(enemy_1.sprite,
-                                     (600-enemy_1.sprite.get_width()*0.5, 150))
-
-            if Player.Player.inventoryIsOpen:
-                DISPLAY_SURFACE.blit(
-                    ImageFiles.images['UI']['Inventory_Background'],
-                    Helper.INVENTORY_POSITION
-                )
-
-            pygame.display.flip()
         else:
             print('GAME IS PAUSED')
             pygame.time.delay(300)
@@ -104,9 +87,9 @@ while running:
         running = False
 
     # cap fps
-    FPS_CLOCK.tick(refreshRate)
+    FPS_CLOCK.tick(REFRESH_RATE)
 
-MapGenerator.run_remover()
+MapGenerator.run_remover()  # cleans generated tiles from Resources/Tiles
 
 pygame.quit()
 sys.exit()

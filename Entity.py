@@ -13,6 +13,7 @@ windowWidth = 450
 screen = pygame.display.set_mode((windowWidth, windowHeight), 0, 32)
 '''
 
+enemy_list = []
 
 class Entity:
     # index is used to keep track of entities
@@ -55,8 +56,15 @@ class Enemy(Entity):
         Entity.__init__(self)
         self.health = Entity.defaultHealth  # * (enemyLevel * 0.1)
         self.sprite = ImageFiles.images['Enemies'][0]  # [random.randint(0, len(ImageFiles.images) - 1)]
+        self.pos = [0, 0]
+        enemy_list.append(self)
 
-    def generate_enemy(self, position):
+    def generate_enemy(self, position):  # currently debug only code
+        """
+        Debug code for rendering enemy
+        :param position: Keycode for j, k, or l
+        :return:
+        """
         if position == 106:
             Enemy.enemyVisibility['left'] = True
         elif position == 107:
