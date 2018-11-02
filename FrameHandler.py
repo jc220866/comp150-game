@@ -29,6 +29,8 @@ def update(player, player_action):
     if 'idle' in player_action and player.is_moving:
         player_action = player.move_direction
     player.player_action(player, player_action)
+    for enemy in Entity.enemy_list:
+        enemy.enemy_update()
 
 
 def renderer():  # to be called every frame to render every image in a list

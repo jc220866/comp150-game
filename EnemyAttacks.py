@@ -25,8 +25,8 @@ class enemy_attack_sprite:
 
         self.pos_y = -10
 
-        if lane == 'MiddleLane':
-            self.pos_x = 375 - int(self.rect.width/2)
+        if lane == 'middle':
+            self.pos_x = Helper.LANES['middle'][0][0] - int(self.rect.width/2)
 
     def update_position(self):
 

@@ -2,6 +2,7 @@ import pygame
 import random
 import ImageFiles
 import Helper
+import EnemyAttacks
 # Classes used by Entity type Objects
 
 
@@ -53,24 +54,38 @@ class Enemy(Entity):
         self.alignment = Entity.entity_alignment[0]
         self.health = Entity.defaultHealth  # * (enemyLevel * 0.1)
         self.sprite = ImageFiles.images['Enemy']  # [random.randint(0, len(ImageFiles.images) - 1)]
+        self.chance_to_attack = 1
+
+        self.time_since_attack = pygame.time.get_ticks()
+
+        self.attack_cooldown = random.randint(50, 200)
 
         lane_is_occupied = True
-        lane_key = 'middle'
+        self.lane_key = 'middle'
 
         while lane_is_occupied:
-            lane_key = random.choice(list(Helper.LANES))
-            lane_is_occupied = Helper.LANES[lane_key][1]
+            self.lane_key = random.choice(list(Helper.LANES))
+            lane_is_occupied = Helper.LANES[self.lane_key][1]
 
-        Helper.LANES[lane_key][1] = True
+        Helper.LANES[self.lane_key][1] = True
         self.pos = [
-                    Helper.LANES[lane_key][0][0] - int(self.sprite.get_width() / 2),
-                    Helper.LANES[lane_key][0][1] - int(self.sprite.get_height() / 2)
+                    Helper.LANES[self.lane_key][0][0] - int(self.sprite.get_width() / 2),
+                    Helper.LANES[self.lane_key][0][1] - int(self.sprite.get_height() / 2)
                     ]
         Enemy.numberOfOnscreenEnemies += 1
 
     def is_hit(self, damage):
         self.health = self.health - damage
         # play_sound(enemy_hit)
+
+    def enemy_update(self):
+
+        attack = random.randint(1, 100)
+        if attack <= self.chance_to_attack and pygame.time.get_ticks() - self.time_since_attack > self.attack_cooldown:
+            print('ATTACK on lane ' + self.lane_key)
+            EnemyAttacks.enemy_attack_sprite(self.lane_key)
+
+
 
 
 class EnemyBoss(Enemy):

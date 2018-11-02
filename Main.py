@@ -19,7 +19,7 @@ REFRESH_RATE = Helper.REFRESH_RATE
 DISPLAY_SURFACE = Helper.DISPLAY_SURFACE
 FPS_CLOCK = pygame.time.Clock()
 pygame.display.set_caption('Sekai Saviour')
-DISPLAY_SURFACE.fill(Helper.darkBrown)
+DISPLAY_SURFACE.fill((79, 51, 44))
 player = Player.Player()
 MapGenerator.run_separator()
 

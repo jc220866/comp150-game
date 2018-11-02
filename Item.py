@@ -35,10 +35,10 @@ class Weapon(Item):
 
         # defines the number of possibilities for each modifier
         modifiers_size = [len(Helper.Affinities),
-                          len(Helper.Elements),
+                          len(Helper.ELEMENTS),
                           3,
-                          len(Helper.Modifiers_Bonus),
-                          len(Helper.Quality)]
+                          len(Helper.MODIFIERS_BONUS),
+                          len(Helper.QUALITY)]
 
         # Minimum values for modifiers: the QUALITY cannot be non-existent (-1)
         modifiers_min = [-1, -1, 0, -1, 0,0]
@@ -66,7 +66,7 @@ class Weapon(Item):
         # We select a random value between 0 and 1 for our quality
         quality_roll = random.random()
 
-        # Quality is initialised as 0
+        # QUALITY is initialised as 0
         quality = 0
 
         # For each percentage threshold we assign a possible outcome
@@ -111,36 +111,36 @@ class Weapon(Item):
 
     @staticmethod
     def generate_name(modifiers,
-                      weapon_type=random.randint(0, len(Helper.Weapons))):
+                      weapon_type=random.randint(0, len(Helper.WEAPONS))):
         """Generation of a name string based on a Weapon's modifiers array"""
 
         # We select the corresponding string from the Helper script
-        quality = Helper.Quality[modifiers[4]]
+        quality = Helper.QUALITY[modifiers[4]]
 
         # Weapon type is assigned the corresponding string
-        type = Helper.Weapons[weapon_type]
+        type = Helper.WEAPONS[weapon_type]
 
         if modifiers[1] >= 0:  # If the weapon has elemental attributes
             element = ' of '
             # Based on the tier of the Elemental enchantment
             # we assign a corresponding string
             if modifiers[2] == 0:
-                element = element + Helper.Modifiers_Elemental_T1[modifiers[1]]
+                element = element + Helper.MODIFIERS_ELEMENTAL_T1[modifiers[1]]
             elif modifiers[2] == 1:
-                element = element + Helper.Modifiers_Elemental_T2[modifiers[1]]
+                element = element + Helper.MODIFIERS_ELEMENTAL_T2[modifiers[1]]
             elif modifiers[2] == 2:
-                element = element + Helper.Modifiers_Elemental_T3[modifiers[1]]
+                element = element + Helper.MODIFIERS_ELEMENTAL_T3[modifiers[1]]
         else:
             # If there is no elemental attribute, we assign an empty string
             element = ''
 
             # If the weapon has bonus attributes
         if modifiers[3] != -1:
-            bonus = ' (' + Helper.Modifiers_Bonus[modifiers[3]] + ')'
+            bonus = ' (' + Helper.MODIFIERS_BONUS[modifiers[3]] + ')'
         else:
             bonus = ''
 
-        upgrade = ' ' + Helper.Upgrades[modifiers[5]]
+        upgrade = ' ' + Helper.UPGRADES[modifiers[5]]
 
         name = quality + ' ' + type + element + upgrade + bonus
 

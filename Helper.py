@@ -4,32 +4,35 @@ REFRESH_RATE = 100
 RESOLUTION = (750, 1334)
 DISPLAY_SURFACE = pygame.display.set_mode(RESOLUTION)
 
-SWIPE_DISTANCE = 90  # distance moved for input to be registered as a swipe
-MOVE_DISTANCE = 160  # distance the onscreen character moves
-MOVE_SPEED = 5  # distance for character move steps
+# Entity variables:
+# Lane positions and whether or not they are occupied
+LANES = dict(
+    left=[(150, 375), False],
+    middle=[(375, 375), False],
+    right=[(600, 375), False]
+)
+
+# distance moved for input to be registered as a swipe
+SWIPE_DISTANCE = 90
+
+# distance the onscreen character moves
+MOVE_DISTANCE = LANES['middle'][0][0] - LANES['left'][0][0]
+
+# distance for character move steps
+MOVE_SPEED = 5
 
 INVENTORY_POSITION = (15, 970)
-# Colours - Not currently used
-darkBrown = (79, 51, 44)
-lightBrown = (107, 74, 55)
-darkYellow = (124, 91, 51)
-lightYellow = (147, 117, 53)
-black = (0, 0, 0)
-darkGrey = (63, 63, 63)
-midGrey = (127, 127, 127)
-lightGrey = (191, 191, 191)
-
 
 # Tuples containing elements for naming items, rooms, entities etc
 Affinities = ('Chaos', 'Abyss', 'Void', 'Eldritch')
-Elements = ('Water', 'Air', 'Earth', 'Fire')
-Modifiers_Elemental_T1 = ('Dew', 'Whistles', 'Pebbles', 'Ashes')
-Modifiers_Elemental_T2 = ('Splashes', 'Breezes', 'Rocks', 'Smoulders')
-Modifiers_Elemental_T3 = ('Waves', 'Typhoons', 'Boulders', 'Flames')
-Modifiers_Bonus = ('Cursed', 'Blessed')
-Quality = ('Broken', 'Chipped', 'Mundane', 'Tempered', 'Pristine')
-Weapons = ('Nodachi', 'Katana', 'Tekkan', 'Hachiwari')
-Upgrades = ('+0', '+1', '+2', '+3', '+4', '+5')
+ELEMENTS = ('Water', 'Air', 'Earth', 'Fire')
+MODIFIERS_ELEMENTAL_T1 = ('Dew', 'Whistles', 'Pebbles', 'Ashes')
+MODIFIERS_ELEMENTAL_T2 = ('Splashes', 'Breezes', 'Rocks', 'Smoulders')
+MODIFIERS_ELEMENTAL_T3 = ('Waves', 'Typhoons', 'Boulders', 'Flames')
+MODIFIERS_BONUS = ('Cursed', 'Blessed')
+QUALITY = ('Broken', 'Chipped', 'Mundane', 'Tempered', 'Pristine')
+WEAPONS = ('Nodachi', 'Katana', 'Tekkan', 'Hachiwari')
+UPGRADES = ('+0', '+1', '+2', '+3', '+4', '+5')
 
 
 room_tutorial_path = './Resources/Visual/Textures/Rooms/room.png'
@@ -43,7 +46,7 @@ Modifiers_Elemental_Colours = ((28, 58, 89),
 
 # Usage: Select element from tuples and parse it to generator
 
-# Order: Quality + WEAPON_NAME + 'OF' +  Modifiers_Elemental
+# Order: QUALITY + WEAPON_NAME + 'OF' +  Modifiers_Elemental
 # + Upgrade + (Modifier_Bonus)
 # Example: Chipped Nodachi of Smoulders +2 (Cursed)
 
@@ -57,10 +60,4 @@ room_encounter_type = (
                        'rubble on the road'
                        )
 
-# Entity variables:
 
-LANES = dict(
-    left=[(150, 375), False],
-    middle=[(375, 375), False],
-    right=[(600, 375), False]
-)
