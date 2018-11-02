@@ -17,6 +17,8 @@ class Player(Entity.Entity):
                  Helper.RESOLUTION[1] * 0.2 - playerSurf.get_height() * 0.5
                  + 600
                  ]  # (311.0, 202.8 for 750x1334 resolution)
+    playerRect.x = playerPos[0]
+    playerRect.y = playerPos[1]
     moveDistance = Helper.MOVE_DISTANCE
     inventoryPosition = Helper.INVENTORY_POSITION
     health = 1
@@ -71,6 +73,7 @@ class Player(Entity.Entity):
         if player.is_moving and player.move_direction == 'move_right':
             if player.playerPos[0] < player.player_destination and not player.inventoryIsOpen:
                 player.playerPos[0] += Helper.MOVE_SPEED
+                player.playerRect.x += Helper.MOVE_SPEED
             else:
                 player.direction = ''
                 player.move_direction = ''  # see about putting in function
@@ -79,6 +82,7 @@ class Player(Entity.Entity):
         if player.is_moving and player.move_direction == 'move_left':
             if player.playerPos[0] > player.player_destination and not player.inventoryIsOpen:
                 player.playerPos[0] -= Helper.MOVE_SPEED
+                player.playerRect.x -= Helper.MOVE_SPEED
             else:
                 player.direction = ''
                 player.move_direction = ''

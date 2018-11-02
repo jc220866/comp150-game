@@ -60,6 +60,8 @@ class Enemy(Entity):
 
         self.attack_cooldown = random.randint(50, 200)
 
+        self.max_attack_chance = 1000
+
         lane_is_occupied = True
         self.lane_key = 'middle'
 
@@ -82,7 +84,7 @@ class Enemy(Entity):
 
     def enemy_update(self):
 
-        attack = random.randint(1, 100)
+        attack = random.randint(1, self.max_attack_chance)
         if attack <= self.chance_to_attack and pygame.time.get_ticks() - self.time_since_attack > self.attack_cooldown:
             print('ATTACK on lane ' + self.lane_key)
             EnemyAttacks.enemy_attack_sprite(self.lane_key, self)

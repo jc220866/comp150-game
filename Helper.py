@@ -7,9 +7,9 @@ DISPLAY_SURFACE = pygame.display.set_mode(RESOLUTION)
 # Entity variables:
 # Lane positions and whether or not they are occupied
 LANES = dict(
-    left=[(150, 375), False],
-    middle=[(375, 375), False],
-    right=[(600, 375), False]
+    left=[(150, 250), False],
+    middle=[(375, 250), False],
+    right=[(600, 250), False]
 )
 
 # distance moved for input to be registered as a swipe

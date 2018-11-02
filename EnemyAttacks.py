@@ -21,8 +21,8 @@ class enemy_attack_sprite:
 
         print('this will deal ' + str(self.damage) + ' to the player with ' + str(Player.Player.health) + 'hp')
 
-        self.pos_y = Helper.LANES[lane][0][1] - int(self.rect.height/2)
-        self.pos_x = Helper.LANES[lane][0][0] - int(self.rect.width/2)
+        self.pos_y = self.rect.y = Helper.LANES[lane][0][1] - int(self.rect.height/2)
+        self.pos_x = self.rect.x = Helper.LANES[lane][0][0] - int(self.rect.width/2)
 
         attackSprites.append(self)
 
@@ -30,11 +30,15 @@ class enemy_attack_sprite:
 
         collision_with_player = False
 
-       #if self.rect.colliderect(Player.Player.playerRect):
-            #collision_with_player = True
-            #Player.Player.is_hit(self.damage)
+        if self.rect.colliderect(Player.Player.playerRect):
+            collision_with_player = True
+            Player.Player.is_hit(self.damage)
 
         if self.pos_y < 1334 and collision_with_player is False:
             self.pos_y += enemy_attack_sprite.projectile_speed
-        #elif collision_with_player is True:
-        #    del self
+            self.rect.y += enemy_attack_sprite.projectile_speed
+        elif self.pos_y >= 1334 and collision_with_player is False:
+            attackSprites.remove(self)
+        elif collision_with_player is True:
+            attackSprites.remove(self)
+            del self
