@@ -2,7 +2,7 @@ import pygame
 import random
 import ImageFiles
 import Helper
-import EnemyAttacks
+import Projectile
 # Classes used by Entity type Objects
 
 
@@ -15,6 +15,7 @@ screen = pygame.display.set_mode((windowWidth, windowHeight), 0, 32)
 '''
 
 enemy_list = []
+
 
 class Entity:
     # index is used to keep track of entities
@@ -67,6 +68,8 @@ class Enemy(Entity):
 
         self.damage = 10
 
+        self.rect = self.sprite.get_rect()
+
         while lane_is_occupied:
             self.lane_key = random.choice(list(Helper.LANES))
             lane_is_occupied = Helper.LANES[self.lane_key][1]
@@ -76,18 +79,23 @@ class Enemy(Entity):
                     Helper.LANES[self.lane_key][0][0] - int(self.sprite.get_width() / 2),
                     Helper.LANES[self.lane_key][0][1] - int(self.sprite.get_height() / 2)
                     ]
+        self.rect.x = self.pos[0]
+        self.rect.y = self.pos[1]
         Enemy.numberOfOnscreenEnemies += 1
 
     def is_hit(self, damage):
         self.health = self.health - damage
+        print('\'tis a hit: ' + str(self.health) + ' hp remaining')
         # play_sound(enemy_hit)
+        if self.health <= 0:
+            enemy_list.remove(enemy_list[enemy_list.index(self)])
 
     def enemy_update(self):
 
         attack = random.randint(1, self.max_attack_chance)
         if attack <= self.chance_to_attack and pygame.time.get_ticks() - self.time_since_attack > self.attack_cooldown:
             print('ATTACK on lane ' + self.lane_key)
-            EnemyAttacks.enemy_attack_sprite(self.lane_key, self)
+            Projectile.EnemyProjectile(self.lane_key, self)
 
     def __del__(self):
         try:

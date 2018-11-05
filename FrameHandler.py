@@ -5,7 +5,7 @@ import Helper
 import Entity
 import Player
 import ImageFiles
-import EnemyAttacks
+import Projectile
 from pygame.locals import *
 
 
@@ -36,7 +36,7 @@ def update(player, player_action):
         for enemy in Entity.enemy_list:
             enemy.enemy_update()
 
-        for projectile in EnemyAttacks.attackSprites:
+        for projectile in Projectile.attackSprites:
             projectile.update()
         # print(str(player.playerRect.contains(projectile.rect)))
 
@@ -52,7 +52,7 @@ def renderer():  # to be called every frame to render every image in a list
             Helper.INVENTORY_POSITION
         )
 
-    for projectile in EnemyAttacks.attackSprites:
+    for projectile in Projectile.attackSprites:
         Helper.DISPLAY_SURFACE.blit(projectile.sprite, (projectile.pos_x, projectile.pos_y))
 
     for enemy in Entity.enemy_list:

@@ -18,6 +18,12 @@ SWIPE_DISTANCE = 90
 # distance the onscreen character moves
 MOVE_DISTANCE = LANES['middle'][0][0] - LANES['left'][0][0]
 
+# base speed value for player projectiles
+PROJECTILE_SPEED = 20
+
+# default player attack cooldown in milliseconds
+PLAYER_ATTACK_COOLDOWN = 750
+
 # distance for character move steps
 MOVE_SPEED = 10
 

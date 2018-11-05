@@ -1,7 +1,9 @@
 import Entity
 import Helper
-import pygame
 import ImageFiles
+import Inventory
+import Projectile
+import pygame
 
 
 class Player(Entity.Entity):
@@ -21,12 +23,23 @@ class Player(Entity.Entity):
     playerRect.y = playerPos[1]
     moveDistance = Helper.MOVE_DISTANCE
     inventoryPosition = Helper.INVENTORY_POSITION
+    projectileSpeed = Helper.PROJECTILE_SPEED
+    attackCooldown = Helper.PLAYER_ATTACK_COOLDOWN
+    lastAttack = 0
+    playerInstances = 0
+    baseDamage = 50
     health = 1
     inventoryIsOpen = False
+    hasWeaponEquipped = False
+    weaponEquipped = None
 
     player_destination = 0
 
     def __init__(self):
+        if Player.playerInstances == 0:
+            Player.playerInstances += 1
+        else:
+            raise ValueError('Attempted to create multiple instances of Player')
         Entity.Entity.__init__(self)
         Player.health = Entity.Entity.defaultHealth
 
@@ -36,8 +49,20 @@ class Player(Entity.Entity):
             Player.player_move(action, player)
         elif 'inv' in action:
             Player.inventory_update(action)
-        elif 'idle' == action:
+        elif 'idle' in action:
             pass
+        elif 'attack' in action \
+                and not player.inventoryIsOpen \
+                and not player.is_moving \
+                and pygame.time.get_ticks() \
+                - Player.lastAttack \
+                > Player.attackCooldown:
+            Player.attack()
+
+    @staticmethod
+    def attack():
+        Player.lastAttack = pygame.time.get_ticks()
+        Projectile.PlayerProjectile(Player.currentLane)
 
     @staticmethod
     def inventory_update(action):
@@ -62,16 +87,20 @@ class Player(Entity.Entity):
             if direction == 'move_right' and player.currentLane < 1:
                 player.currentLane += 1
                 player.move_direction = direction
-                player.player_destination = player.playerPos[0] + player.moveDistance
+                player.player_destination = player.playerPos[0] \
+                                            + player.moveDistance
                 player.is_moving = True
             elif direction == 'move_left' and player.currentLane > -1:
                 player.currentLane -= 1
                 player.move_direction = direction   # See about moving out
-                player.player_destination = player.playerPos[0] - player.moveDistance
+                player.player_destination = player.playerPos[0] \
+                                            - player.moveDistance
                 player.is_moving = True
 
         if player.is_moving and player.move_direction == 'move_right':
-            if player.playerPos[0] < player.player_destination and not player.inventoryIsOpen:
+            if player.playerPos[0] < player.player_destination \
+                    and\
+                    not player.inventoryIsOpen:
                 player.playerPos[0] += Helper.MOVE_SPEED
                 player.playerRect.x += Helper.MOVE_SPEED
             else:
@@ -80,7 +109,9 @@ class Player(Entity.Entity):
                 player.is_moving = False
 
         if player.is_moving and player.move_direction == 'move_left':
-            if player.playerPos[0] > player.player_destination and not player.inventoryIsOpen:
+            if player.playerPos[0] > player.player_destination \
+                    and\
+                    not player.inventoryIsOpen:
                 player.playerPos[0] -= Helper.MOVE_SPEED
                 player.playerRect.x -= Helper.MOVE_SPEED
             else:
@@ -90,11 +121,16 @@ class Player(Entity.Entity):
 
     @staticmethod
     def is_hit(damage):
-        print('it is a hit')
         Player.health -= damage
+        print('Player has ' + str(Player.health) + ' hp remaining')
         if Player.health <= 0:
+            print('You\'s ded bruh')
             Player.die()
 
     @staticmethod
+    def equip(weapon):
+        Inventory.Backpack.switch_item(weapon, Player.weaponEquipped)
+
+    @staticmethod
     def die():
-        print('You\'s ded bruh')
+        pass

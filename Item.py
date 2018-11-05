@@ -2,6 +2,7 @@ import Helper
 import random
 import pygame
 import ImageFiles
+import Player
 # Classes used by Item type Objects
 
 
@@ -206,8 +207,14 @@ class Weapon(Item):
 
         return texture
 
+    @staticmethod
+    def generate_damage(modifiers):
+        pass
+
     def __init__(self):
         Item.__init__(self)
+
+        self.damage = Player.Player.baseDamage
 
         modifiers = Weapon.generate_modifiers()
 

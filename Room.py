@@ -10,7 +10,7 @@ import ImageFiles
 class Room:
     room_index = 0
 
-    #create dictionary for lane positions
+    # create dictionary for lane positions
 
     def __init__(self):
         self.index = Room.room_index
@@ -18,6 +18,9 @@ class Room:
 
 
 class RoomTutorial(Room):
+
+    current_stage = 0
+    tutorial_stages = 3
 
     def __init__(self):
         Room.__init__(self)
