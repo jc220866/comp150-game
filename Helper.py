@@ -40,6 +40,32 @@ QUALITY = ('Broken', 'Chipped', 'Mundane', 'Tempered', 'Pristine')
 WEAPONS = ('Nodachi', 'Katana', 'Tekkan', 'Hachiwari')
 UPGRADES = ('+0', '+1', '+2', '+3', '+4', '+5')
 
+TIME_OF_DAY = dict(
+    morning=([400, 1000],
+             (80, 15, 15),
+             ', the monsters return to normal'
+             ),
+    noon=([1000, 1600],
+          (135, 80, 0),
+          ', the monsters are now weakened'
+          ),
+    evening=([1600, 2200],
+             (80, 15, 15),
+             ', the monsters return to normal'
+             ),
+    night=([2200, 400],
+           (25, 50, 75),
+           ', the monsters are stronger'
+           ),
+    night_blood_moon=([2200, 400],
+                      (80, 40, 50),
+                      ', the monsters are enraged!'
+                      ),
+    night_new_moon=([2200, 400],
+                    (38, 118, 168),
+                    ', the monsters are enraged!'
+                    )
+)
 
 room_tutorial_path = './Resources/Visual/Textures/Rooms/room.png'
 
@@ -65,5 +91,9 @@ room_encounter_type = (
                        'a villager in need',
                        'rubble on the road'
                        )
+
+# Custom events
+
+UPDATETIME, t = pygame.USEREVENT+1, 1000
 
 

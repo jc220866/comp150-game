@@ -18,7 +18,7 @@ class EnemyProjectile:
         self.sprite = ImageFiles.images['Enemy_Attack']
         self.rect = self.sprite.get_rect()
         self.lane = lane
-        self.damage = parent_enemy.damage
+        self.damage = parent_enemy.damage()
 
         print('this will deal '
               + str(self.damage)

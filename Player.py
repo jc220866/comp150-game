@@ -60,6 +60,17 @@ class Player(Entity.Entity):
             Player.attack()
 
     @staticmethod
+    def leave_room(player):
+        if Player.currentLane == 'left':
+            direction = 'move_right'
+        elif Player.currentLane == 'right':
+            direction = 'move_left'
+        else:
+            direction = None
+        if direction:
+            Player.player_move(direction, player)
+
+    @staticmethod
     def attack():
         Player.lastAttack = pygame.time.get_ticks()
         Projectile.PlayerProjectile(Player.currentLane)

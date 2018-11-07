@@ -6,12 +6,19 @@ import Entity
 import Player
 import ImageFiles
 import Projectile
+import datetime
+import TimeOfDay
 from pygame.locals import *
+
+pygame.time.set_timer(Helper.UPDATETIME, Helper.t)
 
 
 def event_handler(game_state, player):
+    now = datetime.datetime.now()
     player_action = 'idle'
     for event in pygame.event.get():
+        if event.type == Helper.UPDATETIME:
+            TimeOfDay.TimeOfDay.update_time_of_day(now)
         if event.type == QUIT:
             game_state = 'Quit'
         elif event.type == KEYDOWN:
@@ -21,6 +28,8 @@ def event_handler(game_state, player):
                 Entity.enemy_list.append(Entity.Enemy())
             elif event.key == K_h and Entity.Enemy.numberOfOnscreenEnemies > 0:
                 Entity.enemy_list.clear()
+            elif event.key == K_h and not Player.Player.is_moving:
+                Player.Player.leave_room(player)
         elif event.type == MOUSEBUTTONDOWN:
             player_action = Inputs.read_mouse_movements(event.pos, player)
     return player_action, game_state

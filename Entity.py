@@ -3,6 +3,7 @@ import random
 import ImageFiles
 import Helper
 import Projectile
+import TimeOfDay
 # Classes used by Entity type Objects
 
 
@@ -66,7 +67,9 @@ class Enemy(Entity):
         lane_is_occupied = True
         self.lane_key = 'middle'
 
-        self.damage = 10
+        self.base_damage = 10
+
+        self.damage = self.calculate_damage
 
         self.rect = self.sprite.get_rect()
 
@@ -82,6 +85,9 @@ class Enemy(Entity):
         self.rect.x = self.pos[0]
         self.rect.y = self.pos[1]
         Enemy.numberOfOnscreenEnemies += 1
+
+    def calculate_damage(self):
+        return self.base_damage * TimeOfDay.TimeOfDay.MonsterBuff
 
     def is_hit(self, damage):
         self.health = self.health - damage
