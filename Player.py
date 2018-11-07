@@ -10,6 +10,7 @@ class Player(Entity.Entity):
 
     is_moving = False
     move_direction = ''
+    isLeavingRoom = False
 
     currentLane = 0  # 0: Middle, -1: Left, 1: Right
     displaySurface = Helper.DISPLAY_SURFACE
