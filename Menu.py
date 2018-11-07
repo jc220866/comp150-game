@@ -1,18 +1,21 @@
 import pygame
 import sys
 import Helper
+import MenuHelper
 from pygame.locals import *
 
 pygame.init()
+pygame.font.init()
+
+BLACK = MenuHelper.BLACK
+BRONZE = MenuHelper.BRONZE
+GOLD = MenuHelper.GOLD
+HIGHLIGHT = MenuHelper.HIGHLIGHT
+
 FPS = 60
 FPS_CLOCK = pygame.time.Clock()
 DISPLAY_SURFACE = Helper.DISPLAY_SURFACE
 pygame.display.set_caption('Sekai Saviour')
-
-BLACK = (0, 0, 0)                # currently used for the background
-BACKGROUND_GOLD = (124, 91, 51)   # currently unused
-BUTTON_GOLD = (147, 117, 53)      # colour of the buttons
-HIGHLIGHT = (150, 120, 100, 20)  # colour of the highlight
 
 buttons = dict(
     buttonNewGame=pygame.Rect(50, 434, 300, 150),
@@ -25,15 +28,25 @@ buttons = dict(
 
 
 def draw_menu():  # Draws rectangles to represent the 'buttons'
-    pygame.draw.rect(DISPLAY_SURFACE, BUTTON_GOLD, buttons['buttonNewGame'])
-    pygame.draw.rect(DISPLAY_SURFACE, BUTTON_GOLD, buttons['buttonContinue'])
-    pygame.draw.rect(DISPLAY_SURFACE, BUTTON_GOLD, buttons['buttonSettings'])
-    pygame.draw.rect(DISPLAY_SURFACE, BUTTON_GOLD, buttons['buttonQuit'])
+    pygame.draw.rect(DISPLAY_SURFACE, BRONZE, buttons['buttonNewGame'])
+    DISPLAY_SURFACE.blit(MenuHelper.TEXTSURF_NEWGAME, (130, 484))
+
+    pygame.draw.rect(DISPLAY_SURFACE, BRONZE, buttons['buttonContinue'])
+    DISPLAY_SURFACE.blit(MenuHelper.TEXTSURF_CONTINUE, (480, 484))
+
+    pygame.draw.rect(DISPLAY_SURFACE, BRONZE, buttons['buttonSettings'])
+    DISPLAY_SURFACE.blit(MenuHelper.TEXTSURF_SETTINGS, (130, 684))
+
+    pygame.draw.rect(DISPLAY_SURFACE, BRONZE, buttons['buttonQuit'])
+    DISPLAY_SURFACE.blit(MenuHelper.TEXTSURF_QUIT, (510, 684))
 
 
 def draw_settings_menu():
-    pygame.draw.rect(DISPLAY_SURFACE, BUTTON_GOLD, buttons['settingsBackground'])
-    pygame.draw.rect(DISPLAY_SURFACE, BACKGROUND_GOLD, buttons['settingsExit'])
+    pygame.draw.rect(DISPLAY_SURFACE, BRONZE, buttons['settingsBackground'])
+    DISPLAY_SURFACE.blit(MenuHelper.TEXTSURF_DESPACITO, (625, 940))
+
+    pygame.draw.rect(DISPLAY_SURFACE, GOLD, buttons['settingsExit'])
+    DISPLAY_SURFACE.blit(MenuHelper.TEXTSURF_SETTINGSEXIT, (80, 910))
 
 
 def check_buttons(click_pos):
@@ -73,17 +86,25 @@ def check_settings_buttons(click_pos):
 def highlight_buttons(mx, my):  # Draws a highlight over a button on mouse-over
     if buttons['buttonNewGame'].collidepoint(mx, my):
         pygame.draw.rect(DISPLAY_SURFACE, HIGHLIGHT, buttons['buttonNewGame'])
+        DISPLAY_SURFACE.blit(MenuHelper.TEXTSURF_HIGHNEWGAME, (130, 484))
+
     elif buttons['buttonContinue'].collidepoint(mx, my):
         pygame.draw.rect(DISPLAY_SURFACE, HIGHLIGHT, buttons['buttonContinue'])
+        DISPLAY_SURFACE.blit(MenuHelper.TEXTSURF_HIGHCONTINUE, (480, 484))
+
     elif buttons['buttonSettings'].collidepoint(mx, my):
         pygame.draw.rect(DISPLAY_SURFACE, HIGHLIGHT, buttons['buttonSettings'])
+        DISPLAY_SURFACE.blit(MenuHelper.TEXTSURF_HIGHSETTINGS, (130, 684))
+
     elif buttons['buttonQuit'].collidepoint(mx, my):
         pygame.draw.rect(DISPLAY_SURFACE, HIGHLIGHT, buttons['buttonQuit'])
+        DISPLAY_SURFACE.blit(MenuHelper.TEXTSURF_HIGHQUIT, (510, 684))
 
 
 def highlight_settings_buttons(mx, my):  # Draws a highlight over a button on mouse-over
     if buttons['settingsExit'].collidepoint(mx, my):
         pygame.draw.rect(DISPLAY_SURFACE, HIGHLIGHT, buttons['settingsExit'])
+        DISPLAY_SURFACE.blit(MenuHelper.TEXTSURF_HIGHSETTINGSEXIT, (80, 910))
 
 
 def menu_update():
@@ -91,7 +112,6 @@ def menu_update():
     while True:
         DISPLAY_SURFACE.fill(BLACK)
         draw_menu()
-
         for event in pygame.event.get():
             # stores most recent mouse movement in two variables
             if event.type == MOUSEMOTION:
