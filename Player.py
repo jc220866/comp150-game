@@ -40,36 +40,50 @@ class Player(Entity.Entity):
         if Player.playerInstances == 0:
             Player.playerInstances += 1
         else:
-            raise ValueError('Attempted to create multiple instances of Player')
+            raise ValueError('Attempted to create another instance of Player')
         Entity.Entity.__init__(self)
         Player.health = Entity.Entity.defaultHealth
 
     @staticmethod
     def player_action(player, action):
-        if 'move' in action and not player.inventoryIsOpen:
-            Player.player_move(action, player)
-        elif 'inv' in action:
-            Player.inventory_update(action)
-        elif 'idle' in action:
-            pass
-        elif 'attack' in action \
-                and not player.inventoryIsOpen \
-                and not player.is_moving \
-                and pygame.time.get_ticks() \
-                - Player.lastAttack \
-                > Player.attackCooldown:
-            Player.attack()
+        if not Player.isLeavingRoom:
+            if 'move' in action and not player.inventoryIsOpen:
+                Player.player_move(action, player)
+            elif 'inv' in action:
+                Player.inventory_update(action)
+            elif 'idle' in action:
+                pass
+            elif 'attack' in action \
+                    and not player.inventoryIsOpen \
+                    and not player.is_moving \
+                    and pygame.time.get_ticks() \
+                    - Player.lastAttack \
+                    > Player.attackCooldown:
+                Player.attack()
+        else:
+            Player.leave_room(player)
 
     @staticmethod
     def leave_room(player):
-        if Player.currentLane == 'left':
+        if player.currentLane == -1:
             direction = 'move_right'
-        elif Player.currentLane == 'right':
+        elif player.currentLane == 1:
             direction = 'move_left'
         else:
             direction = None
-        if direction:
+
+        if not Player.isLeavingRoom:
+            Player.isLeavingRoom = True
+        elif player.is_moving:
+            Player.player_move(Player.move_direction, player)
+
+        # case for starting movement towards middle lane
+        if direction and not player.is_moving:
             Player.player_move(direction, player)
+        # once on the middle lane, proceed to go up
+        else:
+            # add code for moving up
+            pass
 
     @staticmethod
     def attack():
@@ -95,6 +109,7 @@ class Player(Entity.Entity):
             direction -- string of the direction to move
             player -- this player class
         """
+        # print(direction)
         if not player.is_moving:
             if direction == 'move_right' and player.currentLane < 1:
                 player.currentLane += 1

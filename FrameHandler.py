@@ -29,7 +29,8 @@ def event_handler(game_state, player):
             elif event.key == K_h and Entity.Enemy.numberOfOnscreenEnemies > 0:
                 Entity.enemy_list.clear()
             elif event.key == K_w and not Player.Player.is_moving:
-                Player.Player.leave_room(player)
+                if len(Entity.enemy_list) == 0:
+                    Player.Player.isLeavingRoom = True
         elif event.type == MOUSEBUTTONDOWN:
             player_action = Inputs.read_mouse_movements(event.pos, player)
     return player_action, game_state
