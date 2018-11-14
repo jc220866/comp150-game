@@ -2,6 +2,7 @@ import pygame
 import sys
 import Helper
 import MenuHelper
+import AudioFiles
 from pygame.locals import *
 
 pygame.init()
@@ -76,9 +77,11 @@ def check_buttons(click_pos, save_file_exists):
 
     elif buttons['buttonContinue'].collidepoint(click_pos):
         if save_file_exists:
+            pygame.mixer.Sound.play(AudioFiles.AudioDict['UI_click_settings'])
             print("Button clicked: Continue")
             # return 'Continue'
         else:
+            pygame.mixer.Sound.play(AudioFiles.AudioDict['UI_click_grayedout'])
             print("Button clicked: Continue. However, save file not found.")
 
     elif buttons['buttonSettings'].collidepoint(click_pos):
@@ -124,7 +127,7 @@ def highlight_settings_buttons(mx, my):  # Draws a highlight over a button on mo
 
 def menu_update():
     (mouse_x, mouse_y) = (0, 0)
-    save_file_exists = False
+    save_file_exists = True
     while True:
         DISPLAY_SURFACE.fill(BLACK)
         draw_menu(save_file_exists)

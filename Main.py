@@ -2,6 +2,7 @@ import pygame
 import sys
 import FrameHandler
 import Entity
+import AudioFiles
 import ImageFiles
 import Helper
 import Menu
@@ -22,7 +23,7 @@ pygame.display.set_caption('Sekai Saviour')
 DISPLAY_SURFACE.fill((79, 51, 44))
 player = Player.Player()
 MapGenerator.run_separator()
-
+AudioFiles.generate_userinterface_sounds()
 
 game_state = 'Main_Menu'
 prev_game_state = ''
